@@ -50,7 +50,8 @@ _buf_writer(const void *buffer, size_t size, void *app_key) {
 }
 
 enum enctype {
-	AS_PER,
+	AS_APER,
+	AS_UPER,
 	AS_DER,
 	AS_XER,
 };
@@ -65,7 +66,12 @@ save_object_as(PDU_t *st, enum enctype how) {
 	 * Save object using specified method.
 	 */
 	switch(how) {
-	case AS_PER:
+	case AS_APER:
+		rval = aper_encode(&asn_DEF_PDU, 0, st, _buf_writer, 0);
+		assert(rval.encoded > 0);
+		fprintf(stderr, "SAVED OBJECT IN SIZE %d\n", buf_offset);
+		return;
+	case AS_UPER:
 		rval = uper_encode(&asn_DEF_PDU, 0, st, _buf_writer, 0);
 		assert(rval.encoded > 0);
 		fprintf(stderr, "SAVED OBJECT IN SIZE %d\n", buf_offset);
@@ -110,7 +116,7 @@ load_object_from(const char *fname, unsigned char *fbuf, size_t size, enum encty
 
 		fprintf(stderr, "LOADING OBJECT OF SIZE %zd FROM [%s] as %s,"
 			" chunks %zd\n",
-			size, fname, how==AS_PER?"PER":"XER", csize);
+			size, fname, (how==AS_APER) || (how==AS_UPER)?"PER":"XER", csize);
 
 		if(st) ASN_STRUCT_FREE(asn_DEF_PDU, st);
 		st = 0;
@@ -139,11 +145,19 @@ load_object_from(const char *fname, unsigned char *fbuf, size_t size, enum encty
 			case AS_DER:
 				assert(0);
 				break;
-			case AS_PER:
-				rval = uper_decode(0, &asn_DEF_PDU,
-					(void **)&st, fbuf + fbuf_offset,
-					fbuf_chunk < fbuf_left 
-					? fbuf_chunk : fbuf_left, 0, 0);
+			case AS_APER:
+			case AS_UPER:
+				if(how == AS_APER) {
+					rval = aper_decode(0, &asn_DEF_PDU,
+						(void **)&st, fbuf + fbuf_offset,
+						(fbuf_chunk < fbuf_left)
+						? fbuf_chunk : fbuf_left, 0, 0);
+				} else {
+					rval = uper_decode(0, &asn_DEF_PDU,
+						(void **)&st, fbuf + fbuf_offset,
+						(fbuf_chunk < fbuf_left)
+						? fbuf_chunk : fbuf_left, 0, 0);
+				}
 				if(rval.code == RC_WMORE) {
 					if(fbuf_chunk == fbuf_left) {
 						fprintf(stderr, "-> PER decode error (%zd bits of %zd bytes (c=%d,l=%d)) \n", rval.consumed, size, fbuf_chunk, fbuf_left);
@@ -191,7 +205,7 @@ load_object_from(const char *fname, unsigned char *fbuf, size_t size, enum encty
 		} while(fbuf_left && rval.code == RC_WMORE);
 
 		assert(rval.code == RC_OK);
-		if(how == AS_PER) {
+		if(how == AS_APER || how == AS_UPER) {
 			fprintf(stderr, "[left %d, off %d, size %zd]\n",
 				fbuf_left, fbuf_offset, size);
 			assert(fbuf_offset == (ssize_t)size);
@@ -244,7 +258,7 @@ xer_encoding_equal(void *obufp, size_t osize, void *nbufp, size_t nsize) {
 }
 
 static void
-compare_with_data_out(const char *fname, void *datap, size_t size) {
+compare_with_data_out(const char *fname, void *datap, size_t size, enum enctype how) {
     char *data = datap;
 	char outName[sizeof(SRCDIR_S) + 256];
 	unsigned char fbuf[1024];
@@ -275,7 +289,7 @@ compare_with_data_out(const char *fname, void *datap, size_t size) {
 		fclose(f);
 
 		fprintf(stderr, "Trying to decode [%s]\n", outName);
-		st = load_object_from(outName, fbuf, rd, AS_PER, mustfail);
+		st = load_object_from(outName, fbuf, rd, how, mustfail);
 		ASN_STRUCT_FREE(asn_DEF_PDU, st);
 		if(mustfail) return;
 
@@ -291,17 +305,17 @@ compare_with_data_out(const char *fname, void *datap, size_t size) {
 }
 
 static void
-process_XER_data(const char *fname, unsigned char *fbuf, size_t size) {
+process_XER_data(const char *fname, unsigned char *fbuf, size_t size, enum enctype how ) {
 	PDU_t *st;
 
 	st = load_object_from(fname, fbuf, size, AS_XER, 0);
 	if(!st) return;
 
 	/* Save and re-load as PER */
-	save_object_as(st, AS_PER);
+	save_object_as(st, how);
 	ASN_STRUCT_FREE(asn_DEF_PDU, st);
-	compare_with_data_out(fname, buf, buf_offset);
-	st = load_object_from("buffer", buf, buf_offset, AS_PER, 0);
+	compare_with_data_out(fname, buf, buf_offset, how);
+	st = load_object_from("buffer", buf, buf_offset, how, 0);
 	assert(st);
 
 	save_object_as(st, AS_XER);
@@ -343,7 +357,10 @@ process(const char *fname) {
 
 	assert((size_t)rd < sizeof(fbuf));	/* expect small files */
 
-	process_XER_data(fname, fbuf, rd);
+	fprintf(stderr, "APER encoding\n");
+	process_XER_data(fname, fbuf, rd, AS_APER);
+	fprintf(stderr, "UPER encoding\n");
+	process_XER_data(fname, fbuf, rd, AS_UPER);
 
 	fprintf(stderr, "Finished [%s]\n", fname);
 
