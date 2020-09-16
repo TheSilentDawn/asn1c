@@ -27,17 +27,24 @@ matrix:
     - os: osx
       env: TASK=distcheck
 
+addons:
+  homebrew:
+    packages:
+      - libtool
+      - lcov
+    update: false
+  apt:
+    packages:
+      - gcc-multilib
+      - lcov
+      - libasan0
+      - libasan1
+      - libasan2
+
 before_install:
   - |
     if [[ "$TRAVIS_OS_NAME" == "linux" ]]; then
-        sudo apt-get install -y gcc-multilib lcov libasan* ;
         gem install coveralls-lcov;
-    fi
-    if [[ "$TRAVIS_OS_NAME" == "osx" ]]; then
-        brew update;
-        brew uninstall libtool;
-        brew install libtool;
-        brew install lcov;
     fi
 script:
   - export
