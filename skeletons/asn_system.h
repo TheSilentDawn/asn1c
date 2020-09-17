@@ -91,7 +91,11 @@ typedef	unsigned int	uint32_t;
 #if defined(__GNUC__) && ((__GNUC__ == 4 && __GNUC_MINOR__>= 4) || __GNUC__ > 4)
 #define CC_PRINTFLIKE(fmt, var) CC_ATTRIBUTE(format(gnu_printf, fmt, var))
 #elif defined(__GNUC__)
+#if defined(ANDROID)
+#define CC_PRINTFLIKE(fmt, var) CC_ATTRIBUTE(__format__(__printf__, fmt, var))
+#else
 #define CC_PRINTFLIKE(fmt, var) CC_ATTRIBUTE(format(printf, fmt, var))
+#endif
 #else
 #define CC_PRINTFLIKE(fmt, var)
 #endif
