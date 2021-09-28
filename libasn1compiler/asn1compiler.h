@@ -123,6 +123,12 @@ enum asn1c_flags {
 	 * Generate Aligned Packed Encoding Rules support code
 	 */
 	A1C_GEN_APER			= 0x8000000,
+	/*
+	 * -gen-JER / -no-gen-JER
+	 * Generate JSON Encoding Rules support code
+	 */
+        A1C_GEN_JER                     = 0x10000000,
+
 };
 
 /*

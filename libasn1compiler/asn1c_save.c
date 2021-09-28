@@ -83,6 +83,8 @@ asn1c__save_asn_config(arg_t *arg, const char *destdir,
         safe_fprintf(mkf, "#define ASN_DISABLE_PRINT_SUPPORT 1\n");
     if(!(arg->flags & A1C_GEN_RFILL))
         safe_fprintf(mkf, "#define ASN_DISABLE_RFILL_SUPPORT 1\n");
+    if(!(arg->flags & A1C_GEN_JER))
+        safe_fprintf(mkf, "#define ASN_DISABLE_JER_SUPPORT 1\n");
 
     fclose(mkf);
     safe_fprintf(stderr, "Generated %s%s\n", destdir, cfgfile_name);
@@ -189,7 +191,8 @@ asn1c__save_library_makefile(arg_t *arg, const asn1c_dep_chainset *deps,
 		(arg->flags & A1C_GEN_UPER) ? "" : "-DASN_DISABLE_UPER_SUPPORT ",
 		(arg->flags & A1C_GEN_APER) ? "" : "-DASN_DISABLE_APER_SUPPORT ",
 		(arg->flags & A1C_GEN_PRINT) ? "" : "-DASN_DISABLE_PRINT_SUPPORT ",
-		(arg->flags & A1C_GEN_RFILL) ? "" : "-DASN_DISABLE_RFILL_SUPPORT ");
+		(arg->flags & A1C_GEN_RFILL) ? "" : "-DASN_DISABLE_RFILL_SUPPORT ",
+		(arg->flags & A1C_GEN_JER) ? "" : "-DASN_DISABLE_JER_SUPPORT ");
 
 	safe_fprintf(
 		mkf,
@@ -238,6 +241,7 @@ asn1c__save_example_mk_makefile(arg_t *arg, const asn1c_dep_chainset *deps,
         (arg->flags & A1C_GEN_APER) ? "": "-DASN_DISABLE_APER_SUPPORT ",
         (arg->flags & A1C_GEN_PRINT) ? "": "-DASN_DISABLE_PRINT_SUPPORT ",
         (arg->flags & A1C_GEN_RFILL) ? "": "-DASN_DISABLE_RFILL_SUPPORT ",
+        (arg->flags & A1C_GEN_JER) ? "": "-DASN_DISABLE_JER_SUPPORT ",
         need_to_generate_pdu_collection(arg) ? "-DASN_PDU_COLLECTION " : "");
 
     if(dlist) {
@@ -321,6 +325,7 @@ asn1c__save_example_am_makefile(arg_t *arg, const asn1c_dep_chainset *deps, cons
                  (arg->flags & A1C_GEN_APER) ? "": "-DASN_DISABLE_APER_SUPPORT ",
                  (arg->flags & A1C_GEN_PRINT) ? "": "-DASN_DISABLE_PRINT_SUPPORT ",
                  (arg->flags & A1C_GEN_RFILL) ? "": "-DASN_DISABLE_RFILL_SUPPORT ",
+                 (arg->flags & A1C_GEN_JER) ? "": "-DASN_DISABLE_JER_SUPPORT ",
 	             need_to_generate_pdu_collection(arg) ? "-DASN_PDU_COLLECTION " : "", destdir);
 
 	if(dlist) {

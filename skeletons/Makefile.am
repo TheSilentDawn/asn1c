@@ -102,6 +102,7 @@ libasn1cskeletons_la_SOURCES =                  \
     uper_support.c uper_support.h               \
     xer_decoder.c xer_decoder.h                 \
     xer_encoder.c xer_encoder.h                 \
+    jer_encoder.c jer_encoder.h                 \
     xer_support.c xer_support.h                 \
     ANY_aper.c                                  \
     ANY_ber.c                                   \
