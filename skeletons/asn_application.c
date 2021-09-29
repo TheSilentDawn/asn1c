@@ -518,7 +518,6 @@ asn_decode(const asn_codec_ctx_t *opt_codec_ctx,
 #endif  /* !defined(ASN_DISABLE_XER_SUPPORT) */
     }
     case ATS_BASIC_JER:
-    case ATS_CANONICAL_JER:
 #if !defined(ASN_DISABLE_JER_SUPPORT)
         return jer_decode(opt_codec_ctx, td, sptr, buffer, size);
 #else
