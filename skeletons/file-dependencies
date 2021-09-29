@@ -84,9 +84,11 @@ CODEC-XER:			# THIS IS A SPECIAL SECTION
 xer_support.h
 xer_decoder.h
 xer_encoder.h
+jer_encoder.h
 xer_support.h xer_support.c	# XML parsing
 xer_decoder.h xer_decoder.c	# XER decoding support
 xer_encoder.h xer_encoder.c	# XER encoding support
+jer_encoder.h jer_encoder.c
 ANY.h ANY_xer.c
 BIT_STRING.h BIT_STRING_xer.c
 BMPString.h BMPString_xer.c

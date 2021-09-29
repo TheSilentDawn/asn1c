@@ -37,7 +37,6 @@ extern asn_TYPE_operation_t asn_OP_TeletexString;
 #endif  /* !defined(ASN_DISABLE_XER_SUPPORT) */
 
 #if !defined(ASN_DISABLE_JER_SUPPORT)
-#define TeletexString_decode_jer OCTET_STRING_decode_jer_hex
 #define TeletexString_encode_jer OCTET_STRING_encode_jer
 #endif  /* !defined(ASN_DISABLE_JER_SUPPORT) */
 

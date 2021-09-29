@@ -50,6 +50,12 @@ typedef void (xer_type_decoder_f)(void);
 typedef void (xer_type_encoder_f)(void);
 #endif  /* !defined(ASN_DISABLE_XER_SUPPORT) */
 
+#if !defined(ASN_DISABLE_JER_SUPPORT)
+#include <jer_encoder.h>  /* Encoder into JER (XML, text) */
+#else
+typedef void (jer_type_encoder_f)(void);
+#endif  /* !defined(ASN_DISABLE_JER_SUPPORT) */
+
 #if !defined(ASN_DISABLE_UPER_SUPPORT) || !defined(ASN_DISABLE_APER_SUPPORT)
 #include <per_decoder.h>  /* Packet Encoding Rules decoder */
 #include <per_encoder.h>  /* Packet Encoding Rules encoder */

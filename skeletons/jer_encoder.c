@@ -150,6 +150,7 @@ jer_equivalent(const struct asn_TYPE_descriptor_s *td, const void *struct1,
                     xb1.buffer_size, xb1.buffer);
         }
     }
+    // this needs to be changed as jer_decode does not exist
 
     rval = jer_decode(NULL, td, (void **)&sptr, xb1.buffer,
                xb1.buffer_size);

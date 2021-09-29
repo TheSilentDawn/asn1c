@@ -588,6 +588,7 @@ usage(const char *av0) {
 
 "  -no-gen-BER           Do not generate the Basic Encoding Rules (BER, X.690) support code\n"
 "  -no-gen-XER           Do not generate the XML Encoding Rules (XER, X.693) support code\n"
+"  -no-gen-JER           Do not generate the JSON Encoding Rules (JER, X.697) support code\n"
 "  -no-gen-OER           Do not generate the Octet Encoding Rules (OER, X.696) support code\n"
 "  -no-gen-UPER          Do not generate the Unaligned Packed Encoding Rules (PER, X.691) support code\n"
 "  -no-gen-APER          Do not generate the Aligned Packed Encoding Rules (PER, X.691) support code\n"
