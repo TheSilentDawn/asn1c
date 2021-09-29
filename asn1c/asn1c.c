@@ -56,7 +56,7 @@ main(int ac, char **av) {
     enum asn1p_flags asn1_parser_flags = A1P_NOFLAGS;
     enum asn1f_flags asn1_fixer_flags = A1F_NOFLAGS;
     enum asn1c_flags asn1_compiler_flags =
-        A1C_NO_C99 | A1C_GEN_BER | A1C_GEN_XER | A1C_GEN_OER | A1C_GEN_UPER | A1C_GEN_APER | A1C_GEN_PRINT | A1C_GEN_RFILL | A1C_GEN_EXAMPLE;
+        A1C_NO_C99 | A1C_GEN_BER | A1C_GEN_XER | A1C_GEN_OER | A1C_GEN_UPER | A1C_GEN_APER | A1C_GEN_PRINT | A1C_GEN_RFILL | A1C_GEN_EXAMPLE | A1C_GEN_JER;
     enum asn1print_flags asn1_printer_flags = APF_NOFLAGS;
     int print_arg__print_out = 0;   /* Don't compile, just print parsed */
     int print_arg__fix_n_print = 0; /* Fix and print */
@@ -154,6 +154,8 @@ main(int ac, char **av) {
                 asn1_compiler_flags |= A1C_GEN_BER;
             } else if(strcmp(optarg, "en-XER") == 0) {
                 asn1_compiler_flags |= A1C_GEN_XER;
+            } else if(strcmp(optarg, "en-JER") == 0) {
+                asn1_compiler_flags |= A1C_GEN_JER;
             } else if(strcmp(optarg, "en-OER") == 0) {
                 asn1_compiler_flags |= A1C_GEN_OER;
             } else if(strcmp(optarg, "en-UPER") == 0) {
@@ -180,6 +182,8 @@ main(int ac, char **av) {
                 asn1_compiler_flags &= ~A1C_GEN_BER;
             } else if(strcmp(optarg, "o-gen-XER") == 0) {
                 asn1_compiler_flags &= ~A1C_GEN_XER;
+            } else if(strcmp(optarg, "o-gen-JER") == 0) {
+                asn1_compiler_flags &= ~A1C_GEN_JER;
             } else if(strcmp(optarg, "o-gen-OER") == 0) {
                 asn1_compiler_flags &= ~A1C_GEN_OER;
             } else if(strcmp(optarg, "o-gen-UPER") == 0) {
