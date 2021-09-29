@@ -17,7 +17,6 @@ struct asn_TYPE_descriptor_s;	/* Forward declaration */
 enum jer_encoder_flags_e {
 	/* Mode of encoding */
 	JER_F_BASIC	= 0x01,	/* BASIC-JER (pretty-printing) */
-	JER_F_CANONICAL	= 0x02	/* Canonical JER (strict rules) */
 };
 
 /*
@@ -26,7 +25,6 @@ enum jer_encoder_flags_e {
  */
 asn_enc_rval_t jer_encode(const struct asn_TYPE_descriptor_s *type_descriptor,
                           const void *struct_ptr, /* Structure to be encoded */
-                          enum jer_encoder_flags_e jer_flags,
                           asn_app_consume_bytes_f *consume_bytes_cb,
                           void *app_key /* Arbitrary callback argument */
 );

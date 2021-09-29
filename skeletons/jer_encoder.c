@@ -11,7 +11,7 @@
  */
 asn_enc_rval_t
 jer_encode(const asn_TYPE_descriptor_t *td, const void *sptr,
-           enum jer_encoder_flags_e jer_flags, asn_app_consume_bytes_f *cb,
+           asn_app_consume_bytes_f *cb,
            void *app_key) {
     asn_enc_rval_t er = {0, 0, 0};
 	asn_enc_rval_t tmper;

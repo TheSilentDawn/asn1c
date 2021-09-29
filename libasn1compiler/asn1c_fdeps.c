@@ -124,6 +124,10 @@ asn1c_read_file_dependencies(arg_t *arg, const char *datadir) {
 					  && strcmp(p, "CODEC-XER:") == 0) {
                     activate = 0;
 					section = FDEP_CODEC_XER;
+				} else if((arg->flags & A1C_GEN_JER)
+					  && strcmp(p, "CODEC-JER:") == 0) {
+                    activate = 0;
+					section = FDEP_CODEC_JER;
 				} else if((arg->flags & A1C_GEN_OER)
 					  && strcmp(p, "CODEC-OER:") == 0) {
                     activate = 0;
