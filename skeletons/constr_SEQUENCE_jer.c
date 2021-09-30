@@ -7,33 +7,6 @@
 #include <constr_SEQUENCE.h>
 #include <OPEN_TYPE.h>
 
-/*
- * Return a standardized complex structure.
- */
-#undef RETURN
-#define RETURN(_code)                     \
-    do {                                  \
-        rval.code = _code;                \
-        rval.consumed = consumed_myself;  \
-        return rval;                      \
-    } while(0)
-
-/*
- * Check whether we are inside the extensions group.
- */
-#define IN_EXTENSION_GROUP(specs, memb_idx)                \
-    ((specs)->first_extension >= 0                         \
-     && (unsigned)(specs)->first_extension <= (memb_idx))
-
-#undef JER_ADVANCE
-#define JER_ADVANCE(num_bytes)            \
-    do {                                  \
-        size_t num = (num_bytes);         \
-        ptr = ((const char *)ptr) + num;  \
-        size -= num;                      \
-        consumed_myself += num;           \
-    } while(0)
-
 asn_enc_rval_t SEQUENCE_encode_jer(const asn_TYPE_descriptor_t *td, const void *sptr,
                     int ilevel, enum jer_encoder_flags_e flags,
                     asn_app_consume_bytes_f *cb, void *app_key) {
