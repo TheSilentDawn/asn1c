@@ -259,12 +259,10 @@ NativeInteger.h NativeInteger_jer.c
 NativeReal.h NativeReal_jer.c
 OBJECT_IDENTIFIER.h OBJECT_IDENTIFIER_jer.c
 OCTET_STRING.h OCTET_STRING_jer.c
-OPEN_TYPE.h OPEN_TYPE_jer.c
 REAL.h REAL_jer.c
 RELATIVE-OID.h RELATIVE-OID_jer.c
 UTCTime.h UTCTime_jer.c
 UniversalString.h UniversalString_jer.c
-asn_codecs_prim.h
 constr_CHOICE.h constr_CHOICE_jer.c
 constr_SEQUENCE_OF.h constr_SEQUENCE_OF_jer.c
 constr_SEQUENCE.h constr_SEQUENCE_jer.c

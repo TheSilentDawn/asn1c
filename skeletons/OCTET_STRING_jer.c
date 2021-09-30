@@ -30,35 +30,21 @@ OCTET_STRING_encode_jer(const asn_TYPE_descriptor_t *td, const void *sptr,
      */
     buf = st->buf;
     end = buf + st->size;
-    if(flags & JER_F_CANONICAL) {
-        char *scend = scratch + (sizeof(scratch) - 2);
-        for(; buf < end; buf++) {
-            if(p >= scend) {
-                ASN__CALLBACK(scratch, p - scratch);
-                p = scratch;
-            }
-            *p++ = h2c[(*buf >> 4) & 0x0F];
-            *p++ = h2c[*buf & 0x0F];
-        }
-
-        ASN__CALLBACK(scratch, p-scratch);  /* Dump the rest */
-    } else {
-        for(i = 0; buf < end; buf++, i++) {
-            if(!(i % 16) && (i || st->size > 16)) {
-                ASN__CALLBACK(scratch, p-scratch);
-                p = scratch;
-                ASN__TEXT_INDENT(1, ilevel);
-            }
-            *p++ = h2c[(*buf >> 4) & 0x0F];
-            *p++ = h2c[*buf & 0x0F];
-            *p++ = 0x20;
-        }
-        if(p - scratch) {
-            p--;  /* Remove the tail space */
-            ASN__CALLBACK(scratch, p-scratch);  /* Dump the rest */
-            if(st->size > 16)
-                ASN__TEXT_INDENT(1, ilevel-1);
-        }
+    for(i = 0; buf < end; buf++, i++) {
+      if(!(i % 16) && (i || st->size > 16)) {
+        ASN__CALLBACK(scratch, p-scratch);
+        p = scratch;
+        ASN__TEXT_INDENT(1, ilevel);
+      }
+      *p++ = h2c[(*buf >> 4) & 0x0F];
+      *p++ = h2c[*buf & 0x0F];
+      *p++ = 0x20;
+    }
+    if(p - scratch) {
+      p--;  /* Remove the tail space */
+      ASN__CALLBACK(scratch, p-scratch);  /* Dump the rest */
+      if(st->size > 16)
+        ASN__TEXT_INDENT(1, ilevel-1);
     }
 
     ASN__ENCODED_OK(er);
