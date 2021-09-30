@@ -38,7 +38,7 @@ asn_enc_rval_t SEQUENCE_encode_jer(const asn_TYPE_descriptor_t *td, const void *
                     int ilevel, enum jer_encoder_flags_e flags,
                     asn_app_consume_bytes_f *cb, void *app_key) {
     asn_enc_rval_t er = {0,0,0};
-    int xcan = (flags & JER_F_CANONICAL);
+    int xcan = 0;
     asn_TYPE_descriptor_t *tmp_def_val_td = 0;
     void *tmp_def_val = 0;
     size_t edx;
