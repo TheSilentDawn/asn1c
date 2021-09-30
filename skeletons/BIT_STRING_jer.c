@@ -20,7 +20,7 @@ BIT_STRING_encode_jer(const asn_TYPE_descriptor_t *td, const void *sptr,
     char *p = scratch;
     char *scend = scratch + (sizeof(scratch) - 10);
     const BIT_STRING_t *st = (const BIT_STRING_t *)sptr;
-    int xcan = (flags & JER_F_CANONICAL);
+    int xcan = 0;
     uint8_t *buf;
     uint8_t *end;
 

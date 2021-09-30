@@ -34,7 +34,7 @@
         consumed_myself += num;           \
     } while(0)
 
-SEQUENCE_encode_jer(const asn_TYPE_descriptor_t *td, const void *sptr,
+asn_enc_rval_t SEQUENCE_encode_jer(const asn_TYPE_descriptor_t *td, const void *sptr,
                     int ilevel, enum jer_encoder_flags_e flags,
                     asn_app_consume_bytes_f *cb, void *app_key) {
     asn_enc_rval_t er = {0,0,0};

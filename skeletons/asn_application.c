@@ -434,7 +434,7 @@ asn_encode_internal(const asn_codec_ctx_t *opt_codec_ctx,
 #if !defined(ASN_DISABLE_JER_SUPPORT)
     case ATS_BASIC_JER:
         if(td->op->jer_encoder) {
-            er = jer_encode(td, sptr, 0, callback, callback_key);
+            er = jer_encode(td, sptr, callback, callback_key);
             if(er.encoded == -1) {
                 if(er.failed_type && er.failed_type->op->jer_encoder) {
                     errno = EBADF;   /* Structure has incorrect form. */

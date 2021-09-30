@@ -185,6 +185,7 @@ typedef struct asn_TYPE_operation_s {
     per_type_encoder_f *aper_encoder;     /* Aligned PER encoder */
     asn_random_fill_f *random_fill;       /* Initialize with a random value */
     asn_outmost_tag_f *outmost_tag;       /* <optional, internal> */
+    jer_type_encoder_f *jer_encoder;        /* Generic JER encoder */
 } asn_TYPE_operation_t;
 
 /*

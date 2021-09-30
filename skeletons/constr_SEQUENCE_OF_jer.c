@@ -19,7 +19,7 @@ SEQUENCE_OF_encode_jer(const asn_TYPE_descriptor_t *td, const void *sptr,
                             ? 0
                             : ((*elm->name) ? elm->name : elm->type->xml_tag);
     size_t mlen = mname ? strlen(mname) : 0;
-    int xcan = (flags & JER_F_CANONICAL);
+    int xcan = 0;
     int i;
 
     if(!sptr) ASN__ENCODE_FAILED;

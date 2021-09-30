@@ -62,7 +62,6 @@ CHOICE_encode_jer(const asn_TYPE_descriptor_t *td, const void *sptr, int ilevel,
 
         er.encoded = 0;
 
-        if(!(flags & JER_F_CANONICAL)) ASN__TEXT_INDENT(1, ilevel);
         ASN__CALLBACK3("<", 1, mname, mlen, ">", 1);
 
         tmper = elm->type->op->jer_encoder(elm->type, memb_ptr,
@@ -72,8 +71,6 @@ CHOICE_encode_jer(const asn_TYPE_descriptor_t *td, const void *sptr, int ilevel,
 
         ASN__CALLBACK3("</", 2, mname, mlen, ">", 1);
     }
-
-    if(!(flags & JER_F_CANONICAL)) ASN__TEXT_INDENT(1, ilevel - 1);
 
     ASN__ENCODED_OK(er);
 cb_failed:
