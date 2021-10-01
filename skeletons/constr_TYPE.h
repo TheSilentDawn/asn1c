@@ -177,6 +177,7 @@ typedef struct asn_TYPE_operation_s {
     der_type_encoder_f *der_encoder;      /* Canonical DER encoder */
     xer_type_decoder_f *xer_decoder;      /* Generic XER decoder */
     xer_type_encoder_f *xer_encoder;      /* [Canonical] XER encoder */
+    jer_type_encoder_f *jer_encoder;        /* Generic JER encoder */
     oer_type_decoder_f *oer_decoder;      /* Generic OER decoder */
     oer_type_encoder_f *oer_encoder;      /* Canonical OER encoder */
     per_type_decoder_f *uper_decoder;     /* Unaligned PER decoder */
@@ -185,7 +186,6 @@ typedef struct asn_TYPE_operation_s {
     per_type_encoder_f *aper_encoder;     /* Aligned PER encoder */
     asn_random_fill_f *random_fill;       /* Initialize with a random value */
     asn_outmost_tag_f *outmost_tag;       /* <optional, internal> */
-    jer_type_encoder_f *jer_encoder;        /* Generic JER encoder */
 } asn_TYPE_operation_t;
 
 /*
