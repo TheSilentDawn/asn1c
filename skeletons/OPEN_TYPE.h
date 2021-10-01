@@ -58,6 +58,14 @@ asn_dec_rval_t OPEN_TYPE_xer_get(
 #define OPEN_TYPE_encode_xer CHOICE_encode_xer
 #endif  /* !defined(ASN_DISABLE_XER_SUPPORT) */
 
+if !defined(ASN_DISABLE_JER_SUPPORT)
+#define OPEN_TYPE_decode_jper NULL
+asn_enc_rval_t OPEN_TYPE_encode_jer(
+    const asn_TYPE_descriptor_t *type_descriptor,
+    const asn_per_constraints_t *constraints, const void *struct_ptr,
+    asn_per_outp_t *per_output);
+#endif  /* !defined(ASN_DISABLE_JER_SUPPORT) */
+
 #if !defined(ASN_DISABLE_OER_SUPPORT)
 asn_dec_rval_t OPEN_TYPE_oer_get(
     const asn_codec_ctx_t *opt_codec_ctx,
