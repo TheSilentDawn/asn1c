@@ -24,13 +24,13 @@ jer_encode(const asn_TYPE_descriptor_t *td, const void *sptr,
 	mname = td->xml_tag;
 	mlen = strlen(mname);
 
-	ASN__CALLBACK3("<", 1, mname, mlen, ">", 1);
+	ASN__CALLBACK3("\"", 1, mname, mlen, "\"", 1);
 
 	tmper = td->op->jer_encoder(td, sptr, 1, 0, cb, app_key);
 	if(tmper.encoded == -1) return tmper;
 	er.encoded += tmper.encoded;
 
-	ASN__CALLBACK3("</", 2, mname, mlen, ">\n", xcan);
+        //	ASN__CALLBACK3("</", 2, mname, mlen, ">\n", xcan);
 
 	ASN__ENCODED_OK(er);
 cb_failed:

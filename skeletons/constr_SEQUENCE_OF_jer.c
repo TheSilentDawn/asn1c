@@ -33,7 +33,7 @@ SEQUENCE_OF_encode_jer(const asn_TYPE_descriptor_t *td, const void *sptr,
 
         if(mname) {
             if(!xcan) ASN__TEXT_INDENT(1, ilevel);
-            ASN__CALLBACK3("<", 1, mname, mlen, ">", 1);
+            ASN__CALLBACK3("\"", 1, mname, mlen, "\":{", 3);
         }
 
         tmper = elm->type->op->jer_encoder(elm->type, memb_ptr, ilevel + 1,
@@ -44,11 +44,11 @@ SEQUENCE_OF_encode_jer(const asn_TYPE_descriptor_t *td, const void *sptr,
             const char *name = elm->type->xml_tag;
             size_t len = strlen(name);
             if(!xcan) ASN__TEXT_INDENT(1, ilevel + 1);
-            ASN__CALLBACK3("<", 1, name, len, "/>", 2);
+            ASN__CALLBACK3("\"", 1, name, len, "\"", 1);
         }
 
         if(mname) {
-            ASN__CALLBACK3("</", 2, mname, mlen, ">", 1);
+          ASN__CALLBACK("}", 1);
         }
     }
 
