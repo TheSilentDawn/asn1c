@@ -24,7 +24,7 @@ NativeEnumerated_encode_jer(const asn_TYPE_descriptor_t *td, const void *sptr,
     el = INTEGER_map_value2enum(specs, *native);
     if(el) {
         er.encoded =
-            asn__format_to_callback(cb, app_key, "<%s/>", el->enum_name);
+            asn__format_to_callback(cb, app_key, "\"%s\"", el->enum_name);
         if(er.encoded < 0) ASN__ENCODE_FAILED;
         ASN__ENCODED_OK(er);
     } else {
