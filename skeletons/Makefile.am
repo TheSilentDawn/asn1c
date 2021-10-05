@@ -134,6 +134,7 @@ libasn1cskeletons_la_SOURCES =                  \
     INTEGER_rfill.c                             \
     INTEGER_uper.c                              \
     INTEGER_xer.c                               \
+    INTEGER_jer.c                               \
     NULL_aper.c                                 \
     NULL_ber.c                                  \
     NULL_oer.c                                  \
@@ -160,6 +161,7 @@ libasn1cskeletons_la_SOURCES =                  \
     OBJECT_IDENTIFIER_print.c                   \
     OBJECT_IDENTIFIER_rfill.c                   \
     OBJECT_IDENTIFIER_xer.c                     \
+    OBJECT_IDENTIFIER_jer.c                     \
     OCTET_STRING_aper.c                         \
     OCTET_STRING_ber.c                          \
     OCTET_STRING_print.c                        \
@@ -179,6 +181,7 @@ libasn1cskeletons_la_SOURCES =                  \
     RELATIVE-OID_print.c                        \
     RELATIVE-OID_rfill.c                        \
     RELATIVE-OID_xer.c                          \
+    RELATIVE-OID_jer.c                          \
     UTCTime_print.c                             \
     UTCTime_rfill.c                             \
     UTCTime_xer.c                               \
