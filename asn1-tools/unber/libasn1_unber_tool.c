@@ -41,12 +41,15 @@
 #include <INTEGER.c>
 #include <INTEGER_ber.c>
 #include <INTEGER_xer.c>
+#include <INTEGER_jer.c>
 #include <INTEGER_rfill.c>
 #include <OBJECT_IDENTIFIER.c>
 #include <OBJECT_IDENTIFIER_xer.c>
+#include <OBJECT_IDENTIFIER_jer.c>
 #include <OBJECT_IDENTIFIER_rfill.c>
 #include <RELATIVE-OID.c>
 #include <RELATIVE-OID_xer.c>
+#include <RELATIVE-OID_jer.c>
 #include <RELATIVE-OID_rfill.c>
 #include <asn_codecs_prim.c>
 #include <asn_codecs_prim_ber.c>
