@@ -59,7 +59,6 @@ asn_dec_rval_t OPEN_TYPE_xer_get(
 #endif  /* !defined(ASN_DISABLE_XER_SUPPORT) */
 
 #if !defined(ASN_DISABLE_JER_SUPPORT)
-#define OPEN_TYPE_decode_jer NULL
 #define OPEN_TYPE_encode_jer CHOICE_encode_jer
 #endif  /* !defined(ASN_DISABLE_JER_SUPPORT) */
 
