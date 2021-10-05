@@ -6,6 +6,11 @@
 #include <asn_internal.h>
 #include <constr_SET_OF.h>
 
+typedef struct jer_tmp_enc_s {
+    void *buffer;
+    size_t offset;
+    size_t size;
+} jer_tmp_enc_t;
 
 static int
 SET_OF_encode_jer_callback(const void *buffer, size_t size, void *key) {
