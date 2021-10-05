@@ -6,31 +6,6 @@
 #include <asn_internal.h>
 #include <constr_SET_OF.h>
 
-/*
- * Return a standardized complex structure.
- */
-#undef RETURN
-#define RETURN(_code)                     \
-    do {                                  \
-        rval.code = _code;                \
-        rval.consumed = consumed_myself;  \
-        return rval;                      \
-    } while(0)
-
-#undef JER_ADVANCE
-#define JER_ADVANCE(num_bytes)                    \
-    do {                                          \
-        size_t num = num_bytes;                   \
-        buf_ptr = ((const char *)buf_ptr) + num;  \
-        size -= num;                              \
-        consumed_myself += num;                   \
-    } while(0)
-
-typedef struct jer_tmp_enc_s {
-    void *buffer;
-    size_t offset;
-    size_t size;
-} jer_tmp_enc_t;
 
 static int
 SET_OF_encode_jer_callback(const void *buffer, size_t size, void *key) {

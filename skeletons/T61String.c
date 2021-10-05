@@ -35,10 +35,8 @@ asn_TYPE_operation_t asn_OP_T61String = {
     0,
 #endif  /* !defined(ASN_DISABLE_XER_SUPPORT) */
 #if !defined(ASN_DISABLE_JER_SUPPORT)
-    0,
     OCTET_STRING_encode_jer,
 #else
-    0,
     0,
 #endif  /* !defined(ASN_DISABLE_JER_SUPPORT) */
 #if !defined(ASN_DISABLE_OER_SUPPORT)

@@ -24,29 +24,3 @@ NULL_encode_jer(const asn_TYPE_descriptor_t *td, const void *sptr, int ilevel,
     er.encoded = 0;
     ASN__ENCODED_OK(er);
 }
-
-
-static enum jer_pbd_rval
-NULL__jer_body_decode(const asn_TYPE_descriptor_t *td, void *sptr,
-                      const void *chunk_buf, size_t chunk_size) {
-    (void)td;
-    (void)sptr;
-    (void)chunk_buf;  /* Going to be empty according to the rules below. */
-
-    /*
-     * There must be no content in self-terminating <NULL/> tag.
-     */
-    if(chunk_size)
-        return XPBD_BROKEN_ENCODING;
-    else
-        return XPBD_BODY_CONSUMED;
-}
-
-asn_dec_rval_t
-NULL_decode_jer(const asn_codec_ctx_t *opt_codec_ctx,
-                const asn_TYPE_descriptor_t *td, void **sptr,
-                const char *opt_mname, const void *buf_ptr, size_t size) {
-    return jer_decode_primitive(opt_codec_ctx, td,
-        sptr, sizeof(NULL_t), opt_mname, buf_ptr, size,
-        NULL__jer_body_decode);
-}
