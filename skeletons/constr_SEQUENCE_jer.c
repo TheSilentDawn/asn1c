@@ -63,8 +63,8 @@ asn_enc_rval_t SEQUENCE_encode_jer(const asn_TYPE_descriptor_t *td, const void *
         if(tmper.encoded == -1) return tmper;
         er.encoded += tmper.encoded;
 
-        ASN__CALLBACK("},", 2);
     }
+    ASN__CALLBACK("},", 2);
 
     if(!xcan) ASN__TEXT_INDENT(1, ilevel - 1);
 
