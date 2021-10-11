@@ -51,7 +51,7 @@ asn_enc_rval_t SEQUENCE_encode_jer(const asn_TYPE_descriptor_t *td, const void *
         }
 
         if(!xcan) ASN__TEXT_INDENT(1, ilevel);
-        ASN__CALLBACK3("\"", 1, mname, mlen, "\": {", 4);
+        ASN__CALLBACK3("{\n\"", 3, mname, mlen, "\": ", 3);
 
         /* Print the member itself */
         tmper = elm->type->op->jer_encoder(elm->type, memb_ptr, ilevel + 1,

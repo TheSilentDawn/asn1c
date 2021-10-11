@@ -24,7 +24,7 @@ jer_encode(const asn_TYPE_descriptor_t *td, const void *sptr,
 	mname = td->xml_tag;
 	mlen = strlen(mname);
 
-	ASN__CALLBACK3("{\"", 2, mname, mlen, "\":", 2);
+	ASN__CALLBACK3("{\n\"", 3, mname, mlen, "\":", 2);
 
 	tmper = td->op->jer_encoder(td, sptr, 1, 0, cb, app_key);
 	if(tmper.encoded == -1) return tmper;
