@@ -25,6 +25,7 @@ SEQUENCE_OF_encode_jer(const asn_TYPE_descriptor_t *td, const void *sptr,
     if(!sptr) ASN__ENCODE_FAILED;
 
     er.encoded = 0;
+    ASN__CALLBACK("[", 1);
 
     for(i = 0; i < list->count; i++) {
         asn_enc_rval_t tmper = {0,0,0};
@@ -33,7 +34,7 @@ SEQUENCE_OF_encode_jer(const asn_TYPE_descriptor_t *td, const void *sptr,
 
         if(mname) {
             if(!xcan) ASN__TEXT_INDENT(1, ilevel);
-            ASN__CALLBACK3("\"", 1, mname, mlen, "\":{", 3);
+            ASN__CALLBACK3("{\"", 2, mname, mlen, "\":", 2);
         }
 
         tmper = elm->type->op->jer_encoder(elm->type, memb_ptr, ilevel + 1,
@@ -50,9 +51,13 @@ SEQUENCE_OF_encode_jer(const asn_TYPE_descriptor_t *td, const void *sptr,
         if(mname) {
           ASN__CALLBACK("}", 1);
         }
+        if (i != list->count - 1) {
+          ASN__CALLBACK(",", 1);
+        }
     }
 
     if(!xcan) ASN__TEXT_INDENT(1, ilevel - 1);
+    ASN__CALLBACK("]", 1);
 
     ASN__ENCODED_OK(er);
 cb_failed:

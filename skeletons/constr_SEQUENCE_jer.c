@@ -20,6 +20,8 @@ asn_enc_rval_t SEQUENCE_encode_jer(const asn_TYPE_descriptor_t *td, const void *
 
     er.encoded = 0;
 
+    int bAddComma = 0;
+    ASN__CALLBACK("{\n", 2);
     for(edx = 0; edx < td->elements_count; edx++) {
         asn_enc_rval_t tmper = {0,0,0};
         asn_TYPE_member_t *elm = &td->elements[edx];
@@ -50,8 +52,13 @@ asn_enc_rval_t SEQUENCE_encode_jer(const asn_TYPE_descriptor_t *td, const void *
             memb_ptr = (const void *)((const char *)sptr + elm->memb_offset);
         }
 
+        if (bAddComma == 1) {
+          ASN__CALLBACK(",", 1);
+          bAddComma = 0;
+        }
+
         if(!xcan) ASN__TEXT_INDENT(1, ilevel);
-        ASN__CALLBACK3("{\n\"", 3, mname, mlen, "\": ", 3);
+        ASN__CALLBACK3("\"", 1, mname, mlen, "\": ", 3);
 
         /* Print the member itself */
         tmper = elm->type->op->jer_encoder(elm->type, memb_ptr, ilevel + 1,
@@ -62,9 +69,11 @@ asn_enc_rval_t SEQUENCE_encode_jer(const asn_TYPE_descriptor_t *td, const void *
         }
         if(tmper.encoded == -1) return tmper;
         er.encoded += tmper.encoded;
-
+        if (edx != td->elements_count - 1) {
+          bAddComma = 1;
+        }
     }
-    ASN__CALLBACK("},", 2);
+    ASN__CALLBACK("}", 1);
 
     if(!xcan) ASN__TEXT_INDENT(1, ilevel - 1);
 

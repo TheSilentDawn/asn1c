@@ -42,7 +42,7 @@ OCTET_STRING_encode_jer(const asn_TYPE_descriptor_t *td, const void *sptr,
     }
     if(p - scratch) {
       p--;  /* Remove the tail space */
-      ASN__CALLBACK(scratch, p-scratch);  /* Dump the rest */
+      ASN__CALLBACK3("\"", 1, scratch, p-scratch, "\"", 1);  /* Dump the rest */
       if(st->size > 16)
         ASN__TEXT_INDENT(1, ilevel-1);
     }
