@@ -148,44 +148,4 @@ OCTET_STRING_encode_jer_utf8(const asn_TYPE_descriptor_t *td, const void *sptr,
     er.encoded = encoded_len;
     ASN__ENCODED_OK(er);
 }
-/*
- * Something like strtod(), but with stricter rules.
- */
-static int
-OS__strtoent(int base, const char *buf, const char *end, int32_t *ret_value) {
-	const int32_t last_unicode_codepoint = 0x10ffff;
-	int32_t val = 0;
-	const char *p;
 
-	for(p = buf; p < end; p++) {
-		int ch = *p;
-
-        switch(ch) {
-        case 0x30: case 0x31: case 0x32: case 0x33: case 0x34:  /*01234*/
-        case 0x35: case 0x36: case 0x37: case 0x38: case 0x39:  /*56789*/
-            val = val * base + (ch - 0x30);
-            break;
-        case 0x41: case 0x42: case 0x43:  /* ABC */
-        case 0x44: case 0x45: case 0x46:  /* DEF */
-            val = val * base + (ch - 0x41 + 10);
-            break;
-        case 0x61: case 0x62: case 0x63:  /* abc */
-        case 0x64: case 0x65: case 0x66:  /* def */
-            val = val * base + (ch - 0x61 + 10);
-            break;
-        case 0x3b:  /* ';' */
-            *ret_value = val;
-            return (p - buf) + 1;
-        default:
-            return -1;  /* Character set error */
-        }
-
-        /* Value exceeds the Unicode range. */
-        if(val > last_unicode_codepoint) {
-            return -1;
-        }
-    }
-
-    *ret_value = -1;
-    return (p - buf);
-}
