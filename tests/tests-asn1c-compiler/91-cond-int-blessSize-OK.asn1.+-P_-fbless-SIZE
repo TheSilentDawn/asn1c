@@ -17,6 +17,7 @@ ber_type_decoder_f OK_Integer1_decode_ber;
 der_type_encoder_f OK_Integer1_encode_der;
 xer_type_decoder_f OK_Integer1_decode_xer;
 xer_type_encoder_f OK_Integer1_encode_xer;
+jer_type_encoder_f OK_Integer1_encode_xer;
 
 /*** <<< CODE [OK-Integer1] >>> ***/
 
@@ -91,6 +92,7 @@ ber_type_decoder_f OK_Integer2_decode_ber;
 der_type_encoder_f OK_Integer2_encode_der;
 xer_type_decoder_f OK_Integer2_decode_xer;
 xer_type_encoder_f OK_Integer2_encode_xer;
+jer_type_encoder_f OK_Integer2_encode_xer;
 
 /*** <<< CODE [OK-Integer2] >>> ***/
 
@@ -165,6 +167,7 @@ ber_type_decoder_f OK_Integer3_decode_ber;
 der_type_encoder_f OK_Integer3_encode_der;
 xer_type_decoder_f OK_Integer3_decode_xer;
 xer_type_encoder_f OK_Integer3_encode_xer;
+jer_type_encoder_f OK_Integer3_encode_xer;
 
 /*** <<< CODE [OK-Integer3] >>> ***/
 
@@ -239,6 +242,7 @@ ber_type_decoder_f OK_Integer4_decode_ber;
 der_type_encoder_f OK_Integer4_encode_der;
 xer_type_decoder_f OK_Integer4_decode_xer;
 xer_type_encoder_f OK_Integer4_encode_xer;
+jer_type_encoder_f OK_Integer4_encode_xer;
 
 /*** <<< CODE [OK-Integer4] >>> ***/
 
@@ -313,6 +317,7 @@ ber_type_decoder_f NO_Integer5_decode_ber;
 der_type_encoder_f NO_Integer5_encode_der;
 xer_type_decoder_f NO_Integer5_decode_xer;
 xer_type_encoder_f NO_Integer5_encode_xer;
+jer_type_encoder_f NO_Integer5_encode_xer;
 
 /*** <<< CODE [NO-Integer5] >>> ***/
 
