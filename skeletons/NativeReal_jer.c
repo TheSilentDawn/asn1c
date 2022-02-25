@@ -7,7 +7,8 @@
 #include <NativeReal.h>
 #include <REAL.h>
 
-NativeReal_encode_jer(const asn_TYPE_descriptor_t *td, const void *sptr,
+asn_enc_rval_t
+ NativeReal_encode_jer(const asn_TYPE_descriptor_t *td, const void *sptr,
                       int ilevel, enum jer_encoder_flags_e flags,
                       asn_app_consume_bytes_f *cb, void *app_key) {
     double d = NativeReal__get_double(td, sptr);
@@ -15,7 +16,7 @@ NativeReal_encode_jer(const asn_TYPE_descriptor_t *td, const void *sptr,
 
     (void)ilevel;
 
-    er.encoded = REAL__dump(d, flags & JER_F_CANONICAL, cb, app_key);
+    er.encoded = REAL__dump(d, flags, cb, app_key);
     if(er.encoded < 0) ASN__ENCODE_FAILED;
 
     ASN__ENCODED_OK(er);

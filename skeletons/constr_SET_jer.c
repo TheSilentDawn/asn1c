@@ -12,9 +12,9 @@ SET_encode_jer(const asn_TYPE_descriptor_t *td, const void *sptr, int ilevel,
                void *app_key) {
     const asn_SET_specifics_t *specs = (const asn_SET_specifics_t *)td->specifics;
     asn_enc_rval_t er;
-    int xcan = (flags & JER_F_CANONICAL);
-    const asn_TYPE_tag2member_t *t2m = specs->tag2el_cjer;
-    size_t t2m_count = specs->tag2el_cjer_count;
+    int xcan = 0;
+    const asn_TYPE_tag2member_t *t2m = specs->tag2el_cxer;
+    size_t t2m_count = specs->tag2el_cxer_count;
     size_t edx;
 
     if(!sptr)

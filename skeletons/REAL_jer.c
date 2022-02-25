@@ -19,7 +19,7 @@ REAL_encode_jer(const asn_TYPE_descriptor_t *td, const void *sptr, int ilevel,
     if(!st || !st->buf || asn_REAL2double(st, &d))
         ASN__ENCODE_FAILED;
 
-    er.encoded = REAL__dump(d, flags & JER_F_CANONICAL, cb, app_key);
+    er.encoded = REAL__dump(d, flags, cb, app_key);
     if(er.encoded < 0) ASN__ENCODE_FAILED;
 
     ASN__ENCODED_OK(er);

@@ -19,28 +19,23 @@ asn_enc_rval_t
 GeneralizedTime_encode_jer(const asn_TYPE_descriptor_t *td, const void *sptr,
                            int ilevel, enum jer_encoder_flags_e flags,
                            asn_app_consume_bytes_f *cb, void *app_key) {
-    if(flags & JER_F_CANONICAL) {
-        GeneralizedTime_t *gt;
-        asn_enc_rval_t rv;
-        int fv, fd;  /* fractional parts */
-        struct tm tm;
+  GeneralizedTime_t *gt;
+  asn_enc_rval_t rv;
+  int fv, fd;  /* fractional parts */
+  struct tm tm;
 
-        errno = EPERM;
-        if(asn_GT2time_frac((const GeneralizedTime_t *)sptr,
-                &fv, &fd, &tm, 1) == -1
-                && errno != EPERM)
-            ASN__ENCODE_FAILED;
+  errno = EPERM;
+  if(asn_GT2time_frac((const GeneralizedTime_t *)sptr,
+                      &fv, &fd, &tm, 1) == -1
+     && errno != EPERM)
+    ASN__ENCODE_FAILED;
 
-        gt = asn_time2GT_frac(0, &tm, fv, fd, 1);
-        if(!gt) ASN__ENCODE_FAILED;
+  gt = asn_time2GT_frac(0, &tm, fv, fd, 1);
+  if(!gt) ASN__ENCODE_FAILED;
 
-        rv = OCTET_STRING_encode_jer_utf8(td, sptr, ilevel, flags,
-                                          cb, app_key);
-        ASN_STRUCT_FREE(asn_DEF_GeneralizedTime, gt);
-        return rv;
-    } else {
-        return OCTET_STRING_encode_jer_utf8(td, sptr, ilevel, flags,
-                                            cb, app_key);
-    }
+  rv = OCTET_STRING_encode_jer_utf8(td, sptr, ilevel, flags,
+                                    cb, app_key);
+  ASN_STRUCT_FREE(asn_DEF_GeneralizedTime, gt);
+  return rv;
 }
 #endif  /* !defined(ASN___INTERNAL_TEST_MODE) */

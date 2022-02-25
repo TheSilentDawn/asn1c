@@ -48,7 +48,7 @@ verify() {
 
 verify_type_with_variants() {
     local type="$1"
-    for flags in "-no-gen-UPER" "-no-gen-APER" "-no-gen-OER" "-no-gen-XER" "-no-gen-BER" "-no-gen-print" "-no-gen-random-fill" "-no-gen-UPER -no-gen-APER -no-gen-OER -no-gen-XER -no-gen-BER -no-gen-print -no-gen-random-fill" ""; do
+    for flags in "-no-gen-UPER" "-no-gen-APER" "-no-gen-OER" "-no-gen-XER" "-no-gen-JER" "-no-gen-BER" "-no-gen-print" "-no-gen-random-fill" "-no-gen-UPER -no-gen-APER -no-gen-OER -no-gen-XER -no-gen-JER -no-gen-BER -no-gen-print -no-gen-random-fill" ""; do
 #    for flags in "-no-gen-UPER" "-no-gen-APER" "-no-gen-OER" "-no-gen-UPER -no-gen-APER -no-gen-OER" ""; do
         for native in "" "-fwide-types"; do
             verify "$type" "$flags $native"

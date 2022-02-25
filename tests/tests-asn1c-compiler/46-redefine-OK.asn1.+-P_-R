@@ -17,7 +17,7 @@ ber_type_decoder_f PrimitiveType_decode_ber;
 der_type_encoder_f PrimitiveType_encode_der;
 xer_type_decoder_f PrimitiveType_decode_xer;
 xer_type_encoder_f PrimitiveType_encode_xer;
-jer_type_encoder_f PrimitiveType_encode_xer;
+jer_type_encoder_f PrimitiveType_encode_jer;
 
 /*** <<< CODE [PrimitiveType] >>> ***/
 
@@ -153,7 +153,7 @@ ber_type_decoder_f T_decode_ber;
 der_type_encoder_f T_encode_der;
 xer_type_decoder_f T_decode_xer;
 xer_type_encoder_f T_encode_xer;
-jer_type_encoder_f T_encode_xer;
+jer_type_encoder_f T_encode_jer;
 
 /*** <<< CODE [T] >>> ***/
 
