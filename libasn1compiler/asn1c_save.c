@@ -241,7 +241,6 @@ asn1c__save_example_mk_makefile(arg_t *arg, const asn1c_dep_chainset *deps,
         (arg->flags & A1C_GEN_APER) ? "": "-DASN_DISABLE_APER_SUPPORT ",
         (arg->flags & A1C_GEN_PRINT) ? "": "-DASN_DISABLE_PRINT_SUPPORT ",
         (arg->flags & A1C_GEN_RFILL) ? "": "-DASN_DISABLE_RFILL_SUPPORT ",
-        (arg->flags & A1C_GEN_JER) ? "": "-DASN_DISABLE_JER_SUPPORT ",
         need_to_generate_pdu_collection(arg) ? "-DASN_PDU_COLLECTION " : "");
 
     if(dlist) {
