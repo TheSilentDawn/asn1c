@@ -51,7 +51,7 @@ typedef void (xer_type_encoder_f)(void);
 #endif  /* !defined(ASN_DISABLE_XER_SUPPORT) */
 
 #if !defined(ASN_DISABLE_JER_SUPPORT)
-#include <jer_encoder.h>  /* Encoder into JER (XML, text) */
+#include <jer_encoder.h>  /* Encoder into JER (JSON, text) */
 #else
 typedef void (jer_type_encoder_f)(void);
 #endif  /* !defined(ASN_DISABLE_JER_SUPPORT) */

@@ -439,7 +439,7 @@ asn_encode_internal(const asn_codec_ctx_t *opt_codec_ctx,
                 if(er.failed_type && er.failed_type->op->jer_encoder) {
                     errno = EBADF;   /* Structure has incorrect form. */
                 } else {
-                    errno = ENOENT;  /* XER is not defined for this type. */
+                    errno = ENOENT;  /* JER is not defined for this type. */
                 }
             }
         } else {

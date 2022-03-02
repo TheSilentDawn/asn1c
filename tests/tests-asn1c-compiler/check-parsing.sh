@@ -35,23 +35,18 @@ for ref in ${top_srcdir}/tests/tests-asn1c-compiler/*.asn1.+*; do
 	PROCESSING="$ref (from $src)"
 	LC_ALL=C sed -e 's/^found in .*/found in .../' < "$ref" > "$oldversion"
 	ec=0
-        echo ${template}
-	echo "${top_builddir}/asn1c/asn1c -S ${top_srcdir}/skeletons -no-gen-OER -no-gen-UPER -no-gen-APER $flags $src > $ref"
 	(${top_builddir}/asn1c/asn1c -S ${top_srcdir}/skeletons -no-gen-OER -no-gen-UPER -no-gen-APER $flags "$src" | LC_ALL=C sed -e 's/^found in .*/found in .../' > "$newversion") || ec=$?
 	if [ $? = 0 ]; then
-            echo "diffing"
 		diff $diffArgs "$oldversion" "$newversion" || ec=$?
 	fi
 	if [ $ec != 0 ]; then
-            echo "check diffing"
 		LAST_FAILED="$ref (from $src)"
 		finalExitCode=$ec
 	fi
-#	rm -f $oldversion $newversion
+	rm -f $oldversion $newversion
 	if [ "$1" = "regenerate" ]; then
-            echo "regenerate"
 		${top_builddir}/asn1c/asn1c -S ${top_srcdir}/skeletons -no-gen-OER -no-gen-UPER -no-gen-APER $flags "$src" > "$ref"
 	fi
 done
-echo "final"
+
 exit $finalExitCode
