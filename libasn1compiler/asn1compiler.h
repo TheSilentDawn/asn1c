@@ -127,8 +127,7 @@ enum asn1c_flags {
 	 * -gen-JER / -no-gen-JER
 	 * Generate JSON Encoding Rules support code
 	 */
-        A1C_GEN_JER                     = 0x100000000,
-
+	A1C_GEN_JER                     = 0x100000000,
 };
 
 /*
