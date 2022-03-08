@@ -22,7 +22,7 @@ aper_get_length(asn_per_data_t *pd, int range, int ebits, int *repeat) {
 
 	*repeat = 0;
 
-	if (range <= 65536 && range >= 0)
+	if (range < 65536 && range >= 0)
 		return aper_get_nsnnwn(pd, range);
 
 	if (aper_get_align(pd) < 0)
@@ -163,7 +163,7 @@ aper_put_length(asn_per_outp_t *po, int range, size_t length, int *need_eom) {
 	ASN_DEBUG("APER put length %zu with range %d", length, range);
 
 	/* 10.9 X.691 Note 2 */
-	if (range <= 65536 && range >= 0)
+	if (range < 65536 && range >= 0)
 		return aper_put_nsnnwn(po, range, length);
 
 	if (aper_put_align(po) < 0)
