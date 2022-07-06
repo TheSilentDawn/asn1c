@@ -17,7 +17,8 @@ check_PROGRAMS =                \
     check-OER-NativeEnumerated  \
     check-UPER-support          \
     check-UPER-UniversalString  \
-    check-UPER-INTEGER
+    check-UPER-INTEGER		\
+    check-APER-INTEGER
 
 if EXPLICIT_M32
 check_PROGRAMS +=                   \
@@ -37,7 +38,8 @@ check_PROGRAMS +=                   \
     check-32-OER-NativeEnumerated   \
     check-32-UPER-support           \
     check-32-UPER-UniversalString   \
-    check-32-UPER-INTEGER
+    check-32-UPER-INTEGER           \
+    check-32-APER-INTEGER
 
 check_32_ber_tlv_tag_CFLAGS=$(CFLAGS_M32)
 check_32_ber_tlv_tag_LDADD=$(LDADD_32)
@@ -90,6 +92,10 @@ check_32_UPER_UniversalString_SOURCES=check-UPER-UniversalString.c
 check_32_UPER_INTEGER_CFLAGS=$(CFLAGS_M32)
 check_32_UPER_INTEGER_LDADD=$(LDADD_32)
 check_32_UPER_INTEGER_SOURCES=check-UPER-INTEGER.c
+check_32_APER_INTEGER_CFLAGS=$(CFLAGS_M32)
+check_32_APER_INTEGER_LDADD=$(LDADD_32)
+check_32_APER_INTEGER_SOURCES=check-APER-INTEGER.c
+
 
 LDADD_32 = -lm $(top_builddir)/skeletons/libasn1cskeletons_c89_32.la
 endif
