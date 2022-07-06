@@ -15,6 +15,7 @@ check_PROGRAMS =                \
     check-OER-support           \
     check-OER-INTEGER           \
     check-OER-NativeEnumerated  \
+    check-APER-support          \
     check-UPER-support          \
     check-UPER-UniversalString  \
     check-UPER-INTEGER		\
@@ -36,6 +37,7 @@ check_PROGRAMS +=                   \
     check-32-OER-support            \
     check-32-OER-INTEGER            \
     check-32-OER-NativeEnumerated   \
+    check-32-APER-support           \
     check-32-UPER-support           \
     check-32-UPER-UniversalString   \
     check-32-UPER-INTEGER           \
@@ -83,6 +85,9 @@ check_32_OER_INTEGER_SOURCES=check-OER-INTEGER.c
 check_32_OER_NativeEnumerated_CFLAGS=$(CFLAGS_M32)
 check_32_OER_NativeEnumerated_LDADD=$(LDADD_32)
 check_32_OER_NativeEnumerated_SOURCES=check-OER-NativeEnumerated.c
+check_32_APER_support_CFLAGS=$(CFLAGS_M32)
+check_32_APER_support_LDADD=$(LDADD_32)
+check_32_APER_support_SOURCES=check-APER-support.c
 check_32_UPER_support_CFLAGS=$(CFLAGS_M32)
 check_32_UPER_support_LDADD=$(LDADD_32)
 check_32_UPER_support_SOURCES=check-UPER-support.c
