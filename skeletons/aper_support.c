@@ -164,7 +164,7 @@ aper_put_length(asn_per_outp_t *po, int range, size_t length, int *need_eom) {
 
 	/* 10.9 X.691 Note 2 */
 	if (range < 65536 && range >= 0)
-		return aper_put_nsnnwn(po, range, length);
+		return aper_put_nsnnwn(po, range, length) ? -1 : (ssize_t)length;
 
 	if (aper_put_align(po) < 0)
 		return -1;
