@@ -76,8 +76,6 @@ check_round_trips_range65536() {
     check_round_trip(65536, 256);
     check_round_trip(65536, 65534);
     check_round_trip(65536, 65535);
-    check_round_trip(65536, 65536);
-    /* BUG: ^ this should fail but there's another unrelated bug, will be fixed in follow-up commit */
 }
 
 /*
@@ -103,6 +101,14 @@ check_encode_number_greater_than_range() {
     length = range;
     may_write = aper_put_length(&po, range, length, NULL);
     assert(may_write < 0);
+
+    /* Again value = range, with edge case 65536: */
+    memset(&po, 0, sizeof(po));
+    po.buffer = po.tmpspace;
+    po.nbits = 8 * sizeof(po.tmpspace);
+    length = range = 65536;
+    may_write = aper_put_length(&po, range, length, NULL);
+    assert(may_write < 0);
 }
 
 /*
@@ -123,7 +129,7 @@ check_range65536_encoded_as_2octet() {
     unsigned int bytes_needed = (po.buffer - po.tmpspace) + po.nboff/8;
     fprintf(stderr, "\naper_put_length(range=%d, len=%zu) => bytes_needed=%u\n",
             range, length, bytes_needed);
-    assert(bytes_needed == 1); /* BUG: should be 2 octets! */
+    assert(bytes_needed == 2);
 }
 
 int main() {
