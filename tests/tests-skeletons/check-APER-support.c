@@ -77,6 +77,7 @@ check_round_trips_range65536() {
     check_round_trip(65536, 65534);
     check_round_trip(65536, 65535);
     check_round_trip(65536, 65536);
+    /* BUG: ^ this should fail but there's another unrelated bug, will be fixed in follow-up commit */
 }
 
 /*
@@ -87,12 +88,21 @@ check_encode_number_greater_than_range() {
     asn_per_outp_t po;
     int range = 6500;
     size_t length = 6503;
+    ssize_t may_write;
 
     memset(&po, 0, sizeof(po));
     po.buffer = po.tmpspace;
     po.nbits = 8 * sizeof(po.tmpspace);
-    ssize_t may_write = aper_put_length(&po, range, length, NULL);
-    assert(may_write >= 0); /* BUG, this should fail! */
+    may_write = aper_put_length(&po, range, length, NULL);
+    assert(may_write < 0);
+
+    /* Also check value = range should fail: */
+    memset(&po, 0, sizeof(po));
+    po.buffer = po.tmpspace;
+    po.nbits = 8 * sizeof(po.tmpspace);
+    length = range;
+    may_write = aper_put_length(&po, range, length, NULL);
+    assert(may_write < 0);
 }
 
 int main() {
