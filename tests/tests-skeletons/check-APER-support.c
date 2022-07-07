@@ -105,9 +105,31 @@ check_encode_number_greater_than_range() {
     assert(may_write < 0);
 }
 
+/*
+ * Checks that a value which can be put in 1 byte (<256) but with a range type
+ * of 2 bytes (65536) is encoded as 2 octets.
+ */
+static void
+check_range65536_encoded_as_2octet() {
+    asn_per_outp_t po;
+    int range = 65536;
+    size_t length = 5;
+
+    memset(&po, 0, sizeof(po));
+    po.buffer = po.tmpspace;
+    po.nbits = 8 * sizeof(po.tmpspace);
+    ssize_t may_write = aper_put_length(&po, range, length, NULL);
+    assert(may_write >= 0);
+    unsigned int bytes_needed = (po.buffer - po.tmpspace) + po.nboff/8;
+    fprintf(stderr, "\naper_put_length(range=%d, len=%zu) => bytes_needed=%u\n",
+            range, length, bytes_needed);
+    assert(bytes_needed == 1); /* BUG: should be 2 octets! */
+}
+
 int main() {
 
     check_round_trips_range65536();
     check_encode_number_greater_than_range();
+    check_range65536_encoded_as_2octet();
 
 }
