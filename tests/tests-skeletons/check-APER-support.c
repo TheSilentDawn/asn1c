@@ -79,8 +79,25 @@ check_round_trips_range65536() {
     check_round_trip(65536, 65536);
 }
 
+/*
+ * Checks that Encoding a value greater than range fails.
+ */
+static void
+check_encode_number_greater_than_range() {
+    asn_per_outp_t po;
+    int range = 6500;
+    size_t length = 6503;
+
+    memset(&po, 0, sizeof(po));
+    po.buffer = po.tmpspace;
+    po.nbits = 8 * sizeof(po.tmpspace);
+    ssize_t may_write = aper_put_length(&po, range, length, NULL);
+    assert(may_write >= 0); /* BUG, this should fail! */
+}
+
 int main() {
 
     check_round_trips_range65536();
+    check_encode_number_greater_than_range();
 
 }
