@@ -404,7 +404,7 @@ OCTET_STRING_encode_aper(const asn_TYPE_descriptor_t *td,
             buf += maySave >> 3;
         sizeinunits -= maySave;
         assert(!(maySave & 0x07) || !sizeinunits);
-        if(need_eom && aper_put_length(po, -1, 0, 0))
+        if(need_eom && (aper_put_length(po, -1, 0, 0) < 0))
             ASN__ENCODE_FAILED; /* End of Message length */
     }
 

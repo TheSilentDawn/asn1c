@@ -106,7 +106,7 @@ aper_open_type_put(const asn_TYPE_descriptor_t *td,
 		if(per_put_many_bits(po, bptr, maySave * 8)) break;
 		bptr = (char *)bptr + maySave;
 		toGo -= maySave;
-        if(need_eom && aper_put_length(po, -1, 0, 0)) {
+        if(need_eom && (aper_put_length(po, -1, 0, 0) < 0)) {
             FREEMEM(buf);
             return -1;
         }

@@ -79,7 +79,7 @@ SEQUENCE_OF_encode_aper(const asn_TYPE_descriptor_t *td,
                 ASN__ENCODE_FAILED;
         }
 
-        if(need_eom && aper_put_length(po, -1, 0, 0))
+        if(need_eom && (aper_put_length(po, -1, 0, 0) < 0))
             ASN__ENCODE_FAILED;  /* End of Message length */
     }
 
