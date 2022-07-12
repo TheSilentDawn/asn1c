@@ -32,9 +32,8 @@ encode_constrained_size(char *orig, char *encoded, long lbound, unsigned long ub
 	asn_enc_rval_t er;
 	struct asn_per_constraints_s cts;
 	asn_per_outp_t po;
-#if 0
 	char *out_str;
-#endif
+
 	memset(&os, 0, sizeof(os));
 	OCTET_STRING_fromString(&os, orig);
 
@@ -60,8 +59,7 @@ encode_constrained_size(char *orig, char *encoded, long lbound, unsigned long ub
 
 	er = OCTET_STRING_encode_aper(&asn_DEF_OCTET_STRING, &cts, &os, &po);
 
-	assert(er.encoded < 0); /* BUG! it should be >= 0 */
-#if 0
+	assert(er.encoded >= 0);
 	unsigned l = (po.buffer - po.tmpspace) + (po.nboff + 7)/8;
 	memcpy(&buf[er.encoded], po.tmpspace, l);
 	er.encoded += l;
@@ -72,7 +70,6 @@ encode_constrained_size(char *orig, char *encoded, long lbound, unsigned long ub
 	printf("Orig: [%s], encoded: [%s], check [%s]\n",
 		orig, out_str, encoded);
 	assert(strcmp(out_str, encoded) == 0);
-#endif
 	ASN_STRUCT_RESET(asn_DEF_OCTET_STRING, &os);
 }
 

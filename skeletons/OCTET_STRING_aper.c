@@ -345,7 +345,7 @@ OCTET_STRING_encode_aper(const asn_TYPE_descriptor_t *td,
                 ret = aper_put_length(po,
                                       csiz->upper_bound - csiz->lower_bound + 1,
                                       sizeinunits - csiz->lower_bound, 0);
-                if(ret) ASN__ENCODE_FAILED;
+                if(ret < 0) ASN__ENCODE_FAILED;
         }
         if (csiz->effective_bits > 0 || (st->size > 2)
             || (csiz->upper_bound > (2 * 8 / unit_bits))
@@ -372,7 +372,7 @@ OCTET_STRING_encode_aper(const asn_TYPE_descriptor_t *td,
     ASN_DEBUG("Encoding %lu bytes", st->size);
 
     if(sizeinunits == 0) {
-        if(aper_put_length(po, -1, 0, 0))
+        if(aper_put_length(po, -1, 0, 0) < 0)
             ASN__ENCODE_FAILED;
         ASN__ENCODED_OK(er);
     }
