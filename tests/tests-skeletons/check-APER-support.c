@@ -13,7 +13,7 @@ static void put(asn_per_outp_t *po, int range, size_t length) {
         length -= may_write;
         if(need_eom) {
             assert(length == 0);
-            if(aper_put_length(po, range, 0, 0)) {
+            if(aper_put_length(po, -1, 0, 0)) {
                 assert(!"Unreachable");
             }
             fprintf(stderr, "  put EOM 0\n");
