@@ -128,38 +128,42 @@ int aper_put_align(asn_per_outp_t *po) {
 }
 
 ssize_t
-aper_put_length(asn_per_outp_t *po, int range, size_t length, int *need_eom) {
+aper_put_length(asn_per_outp_t *po, ssize_t lb, ssize_t ub, size_t n, int *need_eom) {
+	int constrained = (lb >= 0) && (ub >= 0);
 	int dummy = 0;
 	if(!need_eom) need_eom = &dummy;
 
 	*need_eom = 0;
 
-	ASN_DEBUG("APER put length %zu with range %d", length, range);
+
+	ASN_DEBUG("APER put length %zu with range (%zd..%zd)", n, lb, ub);
 
 	/* 11.9 X.691 Note 2 */
-	if (range <= 65536 && range >= 0)
-		return aper_put_nsnnwn(po, range, length) ? -1 : (ssize_t)length;
+	if (constrained && ub < 65536) {
+		int range = ub - lb + 1;
+		return aper_put_nsnnwn(po, range, n) ? -1 : (ssize_t)n;
+	}
 
 	if (aper_put_align(po) < 0)
 		return -1;
 
-	if(length <= 127) { /* #11.9.3.6 */
-		return per_put_few_bits(po, length, 8)
-		? -1 : (ssize_t)length;
+	if(n <= 127) { /* #11.9.3.6 */
+		return per_put_few_bits(po, n, 8)
+		? -1 : (ssize_t)n;
 	}
-	else if(length < 16384) /* #11.9.3.7 */
-		return per_put_few_bits(po, length|0x8000, 16)
-		? -1 : (ssize_t)length;
+	else if(n < 16384) /* #11.9.3.7 */
+		return per_put_few_bits(po, n|0x8000, 16)
+		? -1 : (ssize_t)n;
 
-	*need_eom = 0 == (length & 16383);
-	length >>= 14;
-	if(length > 4) {
+	*need_eom = 0 == (n & 16383);
+	n >>= 14;
+	if(n > 4) {
 		*need_eom = 0;
-		length = 4;
+		n = 4;
 	}
 
-	return per_put_few_bits(po, 0xC0 | length, 8)
-	? -1 : (ssize_t)(length << 14);
+	return per_put_few_bits(po, 0xC0 | n, 8)
+	? -1 : (ssize_t)(n << 14);
 }
 
 
@@ -171,7 +175,7 @@ aper_put_nslength(asn_per_outp_t *po, size_t length) {
 		if(length == 0) return -1;
 		return per_put_few_bits(po, length-1, 7) ? -1 : 0;
 	} else {
-		if(aper_put_length(po, -1, length, 0) != (ssize_t)length) {
+		if(aper_put_length(po, -1, -1, length, NULL) != (ssize_t)length) {
 			/* This might happen in case of >16K extensions */
 			return -1;
 		}
