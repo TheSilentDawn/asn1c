@@ -132,7 +132,7 @@ ANY_decode_aper(const asn_codec_ctx_t *opt_codec_ctx,
         int ret;
 
         /* Get the PER length */
-        raw_len = aper_get_length(pd, -1, 0, &repeat);
+        raw_len = aper_get_length(pd, -1, -1, 0, &repeat);
         if(raw_len < 0) RETURN(RC_WMORE);
         if(raw_len == 0 && st->buf) break;
 

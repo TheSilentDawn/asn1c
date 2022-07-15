@@ -16,7 +16,7 @@ extern "C" {
  * X.691 (08/2015) #11.9 "General rules for encoding a length determinant"
  * Get the length "n" from the Aligned PER stream.
  */
-ssize_t aper_get_length(asn_per_data_t *pd, int range,
+ssize_t aper_get_length(asn_per_data_t *pd, ssize_t lb, ssize_t ub,
                         int effective_bound_bits, int *repeat);
 
 /*

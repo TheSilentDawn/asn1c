@@ -25,7 +25,7 @@ aper_open_type_get_simple(const asn_codec_ctx_t *ctx,
 	ASN_DEBUG("Getting open type %s...", td->name);
 
 	do {
-	        chunk_bytes = aper_get_length(pd, -1, -1, &repeat);
+	        chunk_bytes = aper_get_length(pd, -1, -1, -1, &repeat);
 		if(chunk_bytes < 0) {
 			FREEMEM(buf);
 			ASN__DECODE_STARVED;

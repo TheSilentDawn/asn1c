@@ -129,7 +129,7 @@ INTEGER_decode_aper(const asn_codec_ctx_t *opt_codec_ctx,
         int ret;
 
         /* Get the PER length */
-        len = aper_get_length(pd, -1, -1, &repeat);
+        len = aper_get_length(pd, -1, -1, -1, &repeat);
         if(len < 0) ASN__DECODE_STARVED;
 
         p = REALLOC(st->buf, st->size + len + 1);

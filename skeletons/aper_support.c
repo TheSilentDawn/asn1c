@@ -17,13 +17,17 @@ aper_get_align(asn_per_data_t *pd) {
 }
 
 ssize_t
-aper_get_length(asn_per_data_t *pd, int range, int ebits, int *repeat) {
+aper_get_length(asn_per_data_t *pd, ssize_t lb, ssize_t ub,
+		int ebits, int *repeat) {
+	int constrained = (lb >= 0) && (ub >= 0);
 	ssize_t value;
 
 	*repeat = 0;
 
-	if (range <= 65536 && range >= 0)
+	if (constrained && ub < 65536) {
+		int range = ub - lb + 1;
 		return aper_get_nsnnwn(pd, range);
+	}
 
 	if (aper_get_align(pd) < 0)
 		return -1;
@@ -59,7 +63,7 @@ aper_get_nslength(asn_per_data_t *pd) {
 		return length;
 	} else {
 		int repeat;
-		length = aper_get_length(pd, -1, -1, &repeat);
+		length = aper_get_length(pd, -1, -1, -1, &repeat);
 		if(length >= 0 && !repeat) return length;
 		return -1; /* Error, or do not support >16K extensions */
 	}

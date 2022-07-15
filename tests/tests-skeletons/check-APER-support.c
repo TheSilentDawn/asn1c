@@ -36,7 +36,7 @@ static size_t get(asn_per_outp_t *po, ssize_t lb, ssize_t ub) {
     size_t length = 0;
     int repeat = 0;
     do {
-        ssize_t n = aper_get_length(&data, ub - lb + 1, -1, &repeat);
+        ssize_t n = aper_get_length(&data, lb, ub, -1, &repeat);
         fprintf(stderr, "  get = %zu +%zd\n", length, n);
         assert(n >= 0);
         length += n;

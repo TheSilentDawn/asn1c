@@ -173,9 +173,10 @@ OCTET_STRING_decode_aper(const asn_codec_ctx_t *opt_codec_ctx,
         /* Get the PER length */
         if (csiz->upper_bound - csiz->lower_bound == 0)
             /* Indefinite length case */
-            raw_len = aper_get_length(pd, -1, csiz->effective_bits, &repeat);
+            raw_len = aper_get_length(pd, -1, -1, csiz->effective_bits, &repeat);
         else
-            raw_len = aper_get_length(pd, csiz->upper_bound - csiz->lower_bound + 1, csiz->effective_bits, &repeat);
+            raw_len = aper_get_length(pd, csiz->lower_bound, csiz->upper_bound,
+                                      csiz->effective_bits, &repeat);
         if(raw_len < 0) RETURN(RC_WMORE);
         raw_len += csiz->lower_bound;
 
