@@ -65,7 +65,6 @@ aper_get_nslength(asn_per_data_t *pd) {
 	}
 }
 
-#if !defined(USE_OLDER_APER_NSNNWN)
 ssize_t
 aper_get_nsnnwn(asn_per_data_t *pd, int range) {
 	ssize_t value;
@@ -117,31 +116,6 @@ aper_get_nsnnwn(asn_per_data_t *pd, int range) {
 	value = per_get_few_bits(pd, 8 * bytes);
 	return value;
 }
-#else /* old APER codec */
-ssize_t
-aper_get_nsnnwn(asn_per_data_t *pd, int dummy_range) {
-	ssize_t value;
-
-	ASN_DEBUG("Get the normally small non-negative whole number APER");
-
-	value = per_get_few_bits(pd, 7);
-	if(value & 64) { /* implicit (value < 0) */
-	value &= 63;
-	value <<= 2;
-	value |= per_get_few_bits(pd, 2);
-	if(value & 128) /* implicit (value < 0) */
-		return -1;
-	if(value == 0)
-		return 0;
-	if(value >= 3)
-		return -1;
-	value = per_get_few_bits(pd, 8 * value);
-	return value;
-	}
-
-	return value;
-}
-#endif /* don't use old APER */
 
 int aper_put_align(asn_per_outp_t *po) {
 
@@ -206,7 +180,6 @@ aper_put_nslength(asn_per_outp_t *po, size_t length) {
 	return 0;
 }
 
-#if !defined(USE_OLDER_APER_NSNNWN)
 int
 aper_put_nsnnwn(asn_per_outp_t *po, int range, int number) {
 	int bytes;
@@ -256,28 +229,3 @@ aper_put_nsnnwn(asn_per_outp_t *po, int range, int number) {
 */
 	return per_put_few_bits(po, number, 8 * bytes);
 }
-#else /* preserve old code base in case */
-int
-aper_put_nsnnwn(asn_per_outp_t *po, int dummy_range, int n) {
-	int bytes;
-
-	ASN_DEBUG("aper_put_nsnnwn");
-
-	if(n <= 63) {
-		if(n < 0) return -1;
-		return per_put_few_bits(po, n, 7);
-	}
-	if(n < 256)
-		bytes = 1;
-	else if(n < 65536)
-		bytes = 2;
-	else if(n < 256 * 65536)
-		bytes = 3;
-	else
-		return -1;      /* This is not a "normally small" value */
-	if(per_put_few_bits(po, bytes, 8))
-		return -1;
-
-	return per_put_few_bits(po, n, 8 * bytes);
-}
-#endif /* which aper_put_nsnnwn() */
