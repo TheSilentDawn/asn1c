@@ -17,7 +17,7 @@ CHOICE_decode_aper(const asn_codec_ctx_t *opt_codec_ctx,
     asn_TYPE_member_t *elm = NULL;  /* CHOICE's element */
     void *memb_ptr = NULL;
     void **memb_ptr2 = NULL;
-    void *st = *sptr = NULL;
+    void *st = *sptr;
     int value = 0;
 
     if(ASN__STACK_OVERFLOW_CHECK(opt_codec_ctx))
