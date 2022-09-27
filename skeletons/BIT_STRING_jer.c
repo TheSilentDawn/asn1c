@@ -20,7 +20,6 @@ BIT_STRING_encode_jer(const asn_TYPE_descriptor_t *td, const void *sptr,
     char *p = scratch;
     char *scend = scratch + (sizeof(scratch) - 10);
     const BIT_STRING_t *st = (const BIT_STRING_t *)sptr;
-    int xcan = 0;
     uint8_t *buf;
     uint8_t *end;
 
@@ -37,19 +36,15 @@ BIT_STRING_encode_jer(const asn_TYPE_descriptor_t *td, const void *sptr,
      */
     for(; buf < end; buf++) {
         int v = *buf;
-        int nline = xcan?0:(((buf - st->buf) % 8) == 0);
-        if(p >= scend || nline) {
+        if(p >= scend) {
             ASN__CALLBACK(scratch, p - scratch);
             p = scratch;
-            if(nline) ASN__TEXT_INDENT(1, ilevel);
         }
         memcpy(p + 0, _bit_pattern[v >> 4], 4);
         memcpy(p + 4, _bit_pattern[v & 0x0f], 4);
         p += 8;
     }
 
-    if(!xcan && ((buf - st->buf) % 8) == 0)
-        ASN__TEXT_INDENT(1, ilevel);
     ASN__CALLBACK(scratch, p - scratch);
     p = scratch;
 
@@ -61,8 +56,6 @@ BIT_STRING_encode_jer(const asn_TYPE_descriptor_t *td, const void *sptr,
             *p++ = (v & (1 << i)) ? 0x31 : 0x30;
         ASN__CALLBACK(scratch, p - scratch);
     }
-
-    if(!xcan) ASN__TEXT_INDENT(1, ilevel - 1);
 
     ASN__ENCODED_OK(er);
 cb_failed:

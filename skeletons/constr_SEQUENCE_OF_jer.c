@@ -19,7 +19,6 @@ SEQUENCE_OF_encode_jer(const asn_TYPE_descriptor_t *td, const void *sptr,
                             ? 0
                             : ((*elm->name) ? elm->name : elm->type->xml_tag);
     size_t mlen = mname ? strlen(mname) : 0;
-    int xcan = 0;
     int i;
 
     if(!sptr) ASN__ENCODE_FAILED;
@@ -33,7 +32,6 @@ SEQUENCE_OF_encode_jer(const asn_TYPE_descriptor_t *td, const void *sptr,
         if(!memb_ptr) continue;
 
         if(mname) {
-            if(!xcan) ASN__TEXT_INDENT(1, ilevel);
             ASN__CALLBACK3("{\"", 2, mname, mlen, "\":", 2);
         }
 
@@ -44,7 +42,6 @@ SEQUENCE_OF_encode_jer(const asn_TYPE_descriptor_t *td, const void *sptr,
         if(tmper.encoded == 0 && specs->as_XMLValueList) {
             const char *name = elm->type->xml_tag;
             size_t len = strlen(name);
-            if(!xcan) ASN__TEXT_INDENT(1, ilevel + 1);
             ASN__CALLBACK3("\"", 1, name, len, "\"", 1);
         }
 
@@ -56,7 +53,6 @@ SEQUENCE_OF_encode_jer(const asn_TYPE_descriptor_t *td, const void *sptr,
         }
     }
 
-    if(!xcan) ASN__TEXT_INDENT(1, ilevel - 1);
     ASN__CALLBACK("]", 1);
 
     ASN__ENCODED_OK(er);

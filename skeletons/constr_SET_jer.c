@@ -12,7 +12,6 @@ SET_encode_jer(const asn_TYPE_descriptor_t *td, const void *sptr, int ilevel,
                void *app_key) {
     const asn_SET_specifics_t *specs = (const asn_SET_specifics_t *)td->specifics;
     asn_enc_rval_t er;
-    int xcan = 0;
     const asn_TYPE_tag2member_t *t2m = specs->tag2el_cxer;
     size_t t2m_count = specs->tag2el_cxer_count;
     size_t edx;
@@ -48,8 +47,6 @@ SET_encode_jer(const asn_TYPE_descriptor_t *td, const void *sptr, int ilevel,
             memb_ptr = (const void *)((const char *)sptr + elm->memb_offset);
         }
 
-        if(!xcan)
-            ASN__TEXT_INDENT(1, ilevel);
         ASN__CALLBACK3("\"", 1, mname, mlen, "\"", 1);
 
         /* Print the member itself */
@@ -58,11 +55,7 @@ SET_encode_jer(const asn_TYPE_descriptor_t *td, const void *sptr, int ilevel,
                                            cb, app_key);
         if(tmper.encoded == -1) return tmper;
         er.encoded += tmper.encoded;
-
-        //        ASN__CALLBACK3("</", 2, mname, mlen, ">", 1);
     }
-
-    if(!xcan) ASN__TEXT_INDENT(1, ilevel - 1);
 
     ASN__ENCODED_OK(er);
 cb_failed:

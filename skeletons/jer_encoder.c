@@ -14,28 +14,27 @@ jer_encode(const asn_TYPE_descriptor_t *td, const void *sptr,
            asn_app_consume_bytes_f *cb,
            void *app_key) {
     asn_enc_rval_t er = {0, 0, 0};
-	asn_enc_rval_t tmper;
-	const char *mname;
-	size_t mlen;
+    asn_enc_rval_t tmper;
+    const char *mname;
+    size_t mlen;
 
-	if(!td || !sptr) goto cb_failed;
+    if(!td || !sptr) goto cb_failed;
 
-	mname = td->xml_tag;
-	mlen = strlen(mname);
+    mname = td->xml_tag;
+    mlen = strlen(mname);
 
-	ASN__CALLBACK3("{\n\"", 3, mname, mlen, "\":", 2);
+    ASN__CALLBACK3("{\"", 2, mname, mlen, "\":", 2);
 
         int xFlag = 0;
-	tmper = td->op->jer_encoder(td, sptr, 1, xFlag, cb, app_key);
-	if(tmper.encoded == -1) return tmper;
-	er.encoded += tmper.encoded;
+    tmper = td->op->jer_encoder(td, sptr, 1, xFlag, cb, app_key);
+    if(tmper.encoded == -1) return tmper;
+    er.encoded += tmper.encoded;
 
         ASN__CALLBACK("}", 1);
-        //	ASN__CALLBACK3("</", 2, mname, mlen, ">\n", xcan);
 
-	ASN__ENCODED_OK(er);
+    ASN__ENCODED_OK(er);
 cb_failed:
-	ASN__ENCODE_FAILED;
+    ASN__ENCODE_FAILED;
 }
 
 /*
@@ -44,26 +43,26 @@ cb_failed:
  */
 static int
 jer__print2fp(const void *buffer, size_t size, void *app_key) {
-	FILE *stream = (FILE *)app_key;
+    FILE *stream = (FILE *)app_key;
 
-	if(fwrite(buffer, 1, size, stream) != size)
-		return -1;
+    if(fwrite(buffer, 1, size, stream) != size)
+        return -1;
 
-	return 0;
+    return 0;
 }
 
 int
 jer_fprint(FILE *stream, const asn_TYPE_descriptor_t *td, const void *sptr) {
-	asn_enc_rval_t er = {0,0,0};
+    asn_enc_rval_t er = {0,0,0};
 
-	if(!stream) stream = stdout;
-	if(!td || !sptr)
-		return -1;
+    if(!stream) stream = stdout;
+    if(!td || !sptr)
+        return -1;
 
-	er = jer_encode(td, sptr, jer__print2fp, stream);
-	if(er.encoded == -1)
-		return -1;
+    er = jer_encode(td, sptr, jer__print2fp, stream);
+    if(er.encoded == -1)
+        return -1;
 
-	return fflush(stream);
+    return fflush(stream);
 }
 

@@ -31,20 +31,17 @@ OCTET_STRING_encode_jer(const asn_TYPE_descriptor_t *td, const void *sptr,
     buf = st->buf;
     end = buf + st->size;
     for(i = 0; buf < end; buf++, i++) {
-      if(!(i % 16) && (i || st->size > 16)) {
-        ASN__CALLBACK(scratch, p-scratch);
-        p = scratch;
-        ASN__TEXT_INDENT(1, ilevel);
-      }
-      *p++ = h2c[(*buf >> 4) & 0x0F];
-      *p++ = h2c[*buf & 0x0F];
-      *p++ = 0x20;
+        if(!(i % 16) && (i || st->size > 16)) {
+            ASN__CALLBACK(scratch, p-scratch);
+            p = scratch;
+        }
+        *p++ = h2c[(*buf >> 4) & 0x0F];
+        *p++ = h2c[*buf & 0x0F];
+        *p++ = 0x20;
     }
     if(p - scratch) {
-      p--;  /* Remove the tail space */
-      ASN__CALLBACK3("\"", 1, scratch, p-scratch, "\"", 1);  /* Dump the rest */
-      if(st->size > 16)
-        ASN__TEXT_INDENT(1, ilevel-1);
+        p--;  /* Remove the tail space */
+        ASN__CALLBACK3("\"", 1, scratch, p-scratch, "\"", 1);  /* Dump the rest */
     }
 
     ASN__ENCODED_OK(er);
@@ -107,8 +104,8 @@ static const struct OCTET_STRING__jer_escape_table_s {
 
 asn_enc_rval_t
 OCTET_STRING_encode_jer_utf8(const asn_TYPE_descriptor_t *td, const void *sptr,
-                             int ilevel, enum jer_encoder_flags_e flags,
-                             asn_app_consume_bytes_f *cb, void *app_key) {
+        int ilevel, enum jer_encoder_flags_e flags,
+        asn_app_consume_bytes_f *cb, void *app_key) {
     const OCTET_STRING_t *st = (const OCTET_STRING_t *)sptr;
     asn_enc_rval_t er = { 0, 0, 0 };
     uint8_t *buf, *end;
@@ -131,10 +128,10 @@ OCTET_STRING_encode_jer_utf8(const asn_TYPE_descriptor_t *td, const void *sptr,
          * Escape certain characters: X.680/11.15
          */
         if(ch < sizeof(OCTET_STRING__jer_escape_table)
-            / sizeof(OCTET_STRING__jer_escape_table[0])
-        && (s_len = OCTET_STRING__jer_escape_table[ch].size)) {
+                / sizeof(OCTET_STRING__jer_escape_table[0])
+                && (s_len = OCTET_STRING__jer_escape_table[ch].size)) {
             if(((buf - ss) && cb(ss, buf - ss, app_key) < 0)
-            || cb(OCTET_STRING__jer_escape_table[ch].string, s_len, app_key) < 0)
+                    || cb(OCTET_STRING__jer_escape_table[ch].string, s_len, app_key) < 0)
                 ASN__ENCODE_FAILED;
             encoded_len += (buf - ss) + s_len;
             ss = buf + 1;
