@@ -51,6 +51,7 @@ stamp-h*
 /tests/tests-asn1c-smoke/*.asn
 /tests/tests-asn1c-smoke/*.txt
 /tests/tests-asn1c-smoke/converter-example
+/tests/tests-asn1c-smoke/test-*
 
 # /tests/
 /tests/tests-c-compiler/test-*
@@ -96,6 +97,7 @@ doc/docsrc/*.xdv
 /libasn1parser/asn1p_l.c
 /libasn1parser/asn1p_y.c
 /libasn1parser/asn1p_y.h
+/libasn1parser/lex.yyasn1p_l.c
 
 #code coverage
 *.gcno
