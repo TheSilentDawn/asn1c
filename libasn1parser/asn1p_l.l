@@ -539,7 +539,7 @@ WITH			return TOK_WITH;
 
 [(){},;:|!.&@\[\]^]	return yytext[0];
 
-[^A-Za-z0-9:=,{}<.@()[]'\"|&^*;!-] {
+[^A-Za-z0-9:=,{}<.@()[]'\\"|&^*;!-] {
 		if(TYPE_LIFETIME(1994, 0))
 			fprintf(stderr, "ERROR: ");
 		fprintf(stderr,
