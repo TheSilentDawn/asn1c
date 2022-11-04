@@ -123,7 +123,7 @@ ats_simple_name(enum asn_transfer_syntax syntax) {
     case ATS_BASIC_XER:
     case ATS_CANONICAL_XER:
         return "XER";
-    case ATS_BASIC_JER:
+    case ATS_JER:
       return "JER";
     case ATS_UNALIGNED_BASIC_PER:
     case ATS_UNALIGNED_CANONICAL_PER:
@@ -172,7 +172,7 @@ static syntax_selector output_encodings[] = {
      "Output as Aligned PER (Packed Encoding Rules)"},
     {"xer", ATS_BASIC_XER, CODEC_OFFSET(xer_encoder),
      "Output as XER (XML Encoding Rules)"},
-    {"jer", ATS_BASIC_JER, CODEC_OFFSET(jer_encoder),
+    {"jer", ATS_JER, CODEC_OFFSET(jer_encoder),
      "Output as JER (JSON Encoding Rules)"},
     {"text", ATS_NONSTANDARD_PLAINTEXT, CODEC_OFFSET(print_struct),
      "Output as plain semi-structured text"},
@@ -432,7 +432,7 @@ main(int ac, char *av[]) {
         const int is_text_output = osyntax == ATS_NONSTANDARD_PLAINTEXT
                                    || osyntax == ATS_BASIC_XER
                                    || osyntax == ATS_CANONICAL_XER
-                                   || osyntax == ATS_BASIC_JER;
+                                   || osyntax == ATS_JER;
         if(is_text_output) {
             binary_out = stdout;
         } else {
