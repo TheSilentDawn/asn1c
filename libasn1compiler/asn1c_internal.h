@@ -60,6 +60,9 @@ typedef struct arg_s {
     asn1p_expr_t *expr;
 
     int embed;
+    union {
+       int localvalidation;
+    } param;
 } arg_t;
 
 /*

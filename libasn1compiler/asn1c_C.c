@@ -196,7 +196,21 @@ asn1c_lang_C_type_common_INTEGER(arg_t *arg) {
 		if(map_extensions)
 			OUT("\t/* This list is extensible */\n");
 		OUT("};\n");
-
+                OUT("static int asn_validate_%s(const asn_TYPE_descriptor_t *td,\n", MKID(expr));
+                OUT("                       const void *sptr,\n");
+                OUT("                       asn_app_constraint_failed_f *ctfailcb,\n");
+                OUT("                       void* app_key) {\n");
+                OUT("    if(! sptr) { return -1; }\n");
+                OUT("    e_%s value = *(e_%s*)sptr;\n", MKID(expr), MKID(expr));
+                OUT("    switch(value) {\n");
+		for(eidx = 0; eidx < el_count; eidx++) {
+                    OUT("    case %s_%s:\n", MKID(expr), v2e[eidx].name);
+                }
+                OUT("        return 0;\n");
+                OUT("    }\n");
+                OUT("    return -1;\n");
+                OUT("}\n");
+                arg->param.localvalidation = 1;
 		OUT("static const unsigned int asn_MAP_%s_enum2value_%d[] = {\n",
 			MKID(expr), expr->_type_unique_index);
 		qsort(v2e, el_count, sizeof(v2e[0]), compar_enumMap_byName);
@@ -3185,18 +3199,16 @@ emit_type_DEF(arg_t *arg, asn1p_expr_t *expr, enum tvm_compat tv_mode, int tags_
         OUT("_" #foo "");                         \
     } while(0)
 
-#define FUNCREF2(foo)  \
-    do {               \
-        OUT("%s", p2); \
-        OUT("_" #foo); \
-    } while(0)
-
         if (arg->flags & A1C_NO_CONSTRAINTS) {
 			OUT("0");
 		} else {
-			if (!expr->combined_constraints)
-				FUNCREF2(constraint);
-			else
+			if (!expr->combined_constraints) {
+                          if(arg->param.localvalidation == 1)
+                             OUT("asn_validate_%s", p);
+                          else
+                             OUT("%s_constraint", p2);
+                          arg->param.localvalidation = 0;
+			} else
 				FUNCREF(constraint);
 		}
         OUT("\n");
