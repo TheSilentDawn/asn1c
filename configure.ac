@@ -1,7 +1,9 @@
-AC_INIT([asn1c],[0.9.29],[vlm@lionet.info])
+AC_INIT([asn1c], \
+  m4_esyscmd([echo -n `git describe --long --always --dirty`-`git log -1 --format=%ad --date=short`]), \
+  m4_esyscmd([git remote get-url origin|sed s/.git$//]))
 
 AC_CONFIG_AUX_DIR(config)
-AC_CONFIG_HEADER([config.h])
+AC_CONFIG_HEADERS([config.h])
 AM_INIT_AUTOMAKE([foreign tar-pax])
 AC_CONFIG_MACRO_DIR([m4])
 
@@ -261,7 +263,9 @@ AC_SUBST(SKELETONS_CFLAGS)
 AC_SUBST(ASAN_ENV_FLAGS)
 
 dnl Checks for header files.
-AC_HEADER_STDC
+AC_CHECK_INCLUDES_DEFAULT
+AC_PROG_EGREP
+
 AC_CHECK_HEADERS(sys/param.h)
 AC_CHECK_HEADERS(netinet/in.h)
 

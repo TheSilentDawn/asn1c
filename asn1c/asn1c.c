@@ -241,7 +241,7 @@ main(int ac, char **av) {
             skeletons_dir = optarg;
             break;
         case 'v':
-            fprintf(stderr, "ASN.1 Compiler, v" VERSION "\n" COPYRIGHT);
+            fprintf(stderr, "ASN.1 Compiler, v" VERSION " from " PACKAGE_BUGREPORT "\n" COPYRIGHT);
             exit(0);
             break;
         case 'W':
