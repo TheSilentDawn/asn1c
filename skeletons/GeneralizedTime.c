@@ -3,7 +3,9 @@
  * Redistribution and modifications are permitted subject to BSD license.
  */
 #define	_POSIX_PTHREAD_SEMANTICS	/* for Sun */
+#ifndef _REENTRANT
 #define	_REENTRANT			/* for Sun */
+#endif
 #define __EXTENSIONS__                  /* for Sun */
 #ifndef _BSD_SOURCE
 #define _BSD_SOURCE     /* for timegm(3) */
