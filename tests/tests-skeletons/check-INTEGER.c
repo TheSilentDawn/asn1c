@@ -171,10 +171,10 @@ check_64(uint8_t *buf, size_t size, int64_t check_i64, int check_ret) {
 	printf("]: ");
 
 	ret = asn_INTEGER2int64(&val, &rint64);
-	printf(" (%"ASN_PRIdMAX", %d) vs (%"ASN_PRIdMAX", %d)\n",
+	printf(" (%"ASN_PRId64", %d) vs (%"ASN_PRId64", %d)\n",
 		rint64, ret, check_i64, check_ret);
 	assert(ret == check_ret);
-	printf("%"ASN_PRIdMAX" %"ASN_PRIdMAX"\n", rint64, check_i64);
+	printf("%"ASN_PRId64" %"ASN_PRId64"\n", rint64, check_i64);
 	assert(rint64 == check_i64);
 
 	if(check_ret == 0) {
@@ -196,7 +196,7 @@ check_64(uint8_t *buf, size_t size, int64_t check_i64, int check_ret) {
 	ret = INTEGER_print(&asn_DEF_INTEGER, &val, 0, _print2buf, scratch);
 	assert(shared_scratch_start < scratch + sizeof(scratch));
 	assert(ret == 0);
-	ret = snprintf(verify, sizeof(verify), "%"ASN_PRIdMAX"", check_i64);
+	ret = snprintf(verify, sizeof(verify), "%"ASN_PRId64"", check_i64);
 	assert(ret < 0 || (size_t)ret < sizeof(verify));
 	ret = strcmp(scratch, verify);
 	printf("         [%s] vs [%s]: %d%s\n",
@@ -233,7 +233,7 @@ check_unsigned_64(uint8_t *buf, int size, uint64_t check_u64, int check_ret) {
 	printf("]: ");
 
 	ret = asn_INTEGER2uint64(&val, &ruint64);
-	printf(" (%"ASN_PRIuMAX", %d) vs (%"ASN_PRIuMAX", %d)\n",
+	printf(" (%"ASN_PRIu64", %d) vs (%"ASN_PRIu64", %d)\n",
 		ruint64, ret, check_u64, check_ret);
 	assert(ret == check_ret);
 	assert(ruint64 == check_u64);
@@ -264,7 +264,7 @@ check_unsigned_64(uint8_t *buf, int size, uint64_t check_u64, int check_ret) {
 	ret = INTEGER_print(&asn_DEF_INTEGER, &val, 0, _print2buf, scratch);
 	assert(shared_scratch_start < scratch + sizeof(scratch));
 	assert(ret == 0);
-	ret = snprintf(verify, sizeof(verify), "%"ASN_PRIuMAX"", check_u64);
+	ret = snprintf(verify, sizeof(verify), "%"ASN_PRIu64"", check_u64);
 	assert(ret < (int)sizeof(verify));
 	ret = strcmp(scratch, verify);
 	printf("         [%s] vs [%s]: %d%s\n",
@@ -350,9 +350,9 @@ check_strtoimax() {
     char positive_max[32];
     char negative_min[32];
     const int len_pmax = snprintf(positive_max, sizeof(positive_max),
-        "+%" ASN_PRIdMAX, intmax_max);
+        "+%" ASN_PRId64, intmax_max);
     const int len_nmin = snprintf(negative_min, sizeof(negative_min),
-        "%" ASN_PRIdMAX, intmax_min);
+        "%" ASN_PRId64, intmax_min);
     assert(len_pmax < (int)sizeof(positive_max));
     assert(len_nmin < (int)sizeof(negative_min));
 
