@@ -166,9 +166,13 @@ typedef	unsigned int	uint32_t;
 #define ASN_PRI_SSIZE "zd"
 #define ASN_PRIuMAX PRIuMAX
 #define ASN_PRIdMAX PRIdMAX
+#define ASN_PRIu64 PRIu64
+#define ASN_PRId64 PRId64
 #else
 #define ASN_PRI_SIZE "lu"
 #define ASN_PRI_SSIZE "ld"
+#define ASN_PRIu64 "llu"
+#define ASN_PRId64 "lld"
 #if LLONG_MAX > LONG_MAX
 #define ASN_PRIuMAX "llu"
 #define ASN_PRIdMAX "lld"
