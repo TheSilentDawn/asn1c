@@ -12,7 +12,7 @@ static int asn1c_detach_streams(asn1p_expr_t *expr);
 int
 asn1_compile(asn1p_t *asn, const char *datadir, const char *destdir, enum asn1c_flags flags,
 		int argc, int optc, char **argv) {
-	arg_t arg_s;
+	arg_t arg_s = {0};
 	arg_t *arg = &arg_s;
 	asn1p_module_t *mod;
 	int ret;
@@ -242,7 +242,7 @@ asn1c_debug_expr_naming(arg_t *arg) {
 void
 asn1c_debug_type_naming(asn1p_t *asn, enum asn1c_flags flags,
                         char **asn_type_names) {
-    arg_t arg_s;
+    arg_t arg_s = {0};
     arg_t *arg = &arg_s;
 	asn1p_module_t *mod;
 
