@@ -1,7 +1,6 @@
 #include <asn_application.h>
 #include <asn_internal.h>
 #include <aper_decoder.h>
-#include "log.h"
 
 asn_dec_rval_t
 aper_decode_complete(const asn_codec_ctx_t *opt_codec_ctx,
@@ -42,10 +41,12 @@ aper_decode(const asn_codec_ctx_t *opt_codec_ctx,
 	asn_dec_rval_t rval;
 	asn_per_data_t pd;
 
+	FILE *file_pointer = fopen("/tmp/asn1c.txt", "w");
+
 	if(skip_bits < 0 || skip_bits > 7
 		|| unused_bits < 0 || unused_bits > 7
 		|| (unused_bits > 0 && !size)){
-		LOG_I(NR_RRC, "exit test 1");
+		fprintf(file_pointer, "exit test 1\n");
 		ASN__DECODE_FAILED;
 	}
 
@@ -71,7 +72,7 @@ aper_decode(const asn_codec_ctx_t *opt_codec_ctx,
 	pd.nboff = skip_bits;
 	pd.nbits = 8 * size - unused_bits; /* 8 is CHAR_BIT from <limits.h> */
 	if(pd.nboff > pd.nbits){
-		LOG_I(NR_RRC, "exit test 2");
+		fprintf(file_pointer, "exit test 2\n");
 		ASN__DECODE_FAILED;
 	}
 		
@@ -80,7 +81,7 @@ aper_decode(const asn_codec_ctx_t *opt_codec_ctx,
 	 * Invoke type-specific decoder.
 	 */
 	if(!td->op->aper_decoder){
-		LOG_I(NR_RRC, "exit test 3");
+		fprintf(file_pointer, "exit test 3\n");
 		ASN__DECODE_FAILED;	/* PER is not compiled in */
 	}
 	rval = td->op->aper_decoder(opt_codec_ctx, td, 0, sptr, &pd);
@@ -88,15 +89,16 @@ aper_decode(const asn_codec_ctx_t *opt_codec_ctx,
 		/* Return the number of consumed bits */
 		rval.consumed = ((pd.buffer - (const uint8_t *)buffer) << 3)
 		+ pd.nboff - skip_bits;
-		// ASN_DEBUG("PER decoding consumed %zu, counted %zu",
-		LOG_I(NR_RRC, "PER decoding consumed %zu, counted %zu\n",
-				  rval.consumed, pd.moved);
-		LOG_I(NR_RRC, "exit test 4");
+		ASN_DEBUG("PER decoding consumed %zu, counted %zu",
+		// LOG_I(NR_RRC, "PER decoding consumed %zu, counted %zu\n",
+		// 		  rval.consumed, pd.moved);
+		fprintf(file_pointer, "exit test 4\n");
 		assert(rval.consumed == pd.moved);
 	} else {
-		LOG_I(NR_RRC, "exit test 5");
+		fprintf(file_pointer, "exit test 5\n");
 		/* PER codec is not a restartable */
 		rval.consumed = 0;
 	}
+	fclose(file_pointer);
 	return rval;
 }
