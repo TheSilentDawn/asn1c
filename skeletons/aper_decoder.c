@@ -43,8 +43,10 @@ aper_decode(const asn_codec_ctx_t *opt_codec_ctx,
 
 	if(skip_bits < 0 || skip_bits > 7
 		|| unused_bits < 0 || unused_bits > 7
-		|| (unused_bits > 0 && !size))
+		|| (unused_bits > 0 && !size)){
+		printf("exit test 1");
 		ASN__DECODE_FAILED;
+	}
 
 	/*
 	 * Stack checker requires that the codec context
@@ -67,23 +69,31 @@ aper_decode(const asn_codec_ctx_t *opt_codec_ctx,
 	pd.buffer = (const uint8_t *)buffer;
 	pd.nboff = skip_bits;
 	pd.nbits = 8 * size - unused_bits; /* 8 is CHAR_BIT from <limits.h> */
-	if(pd.nboff > pd.nbits)
+	if(pd.nboff > pd.nbits){
+		printf("exit test 2");
 		ASN__DECODE_FAILED;
+	}
+		
 
 	/*
 	 * Invoke type-specific decoder.
 	 */
-	if(!td->op->aper_decoder)
+	if(!td->op->aper_decoder){
+		printf("exit test 3");
 		ASN__DECODE_FAILED;	/* PER is not compiled in */
+	}
 	rval = td->op->aper_decoder(opt_codec_ctx, td, 0, sptr, &pd);
 	if(rval.code == RC_OK) {
 		/* Return the number of consumed bits */
 		rval.consumed = ((pd.buffer - (const uint8_t *)buffer) << 3)
 		+ pd.nboff - skip_bits;
-		ASN_DEBUG("PER decoding consumed %zu, counted %zu",
+		// ASN_DEBUG("PER decoding consumed %zu, counted %zu",
+		printf("PER decoding consumed %zu, counted %zu\n",
 				  rval.consumed, pd.moved);
+		printf("exit test 4");
 		assert(rval.consumed == pd.moved);
 	} else {
+		printf("exit test 5");
 		/* PER codec is not a restartable */
 		rval.consumed = 0;
 	}

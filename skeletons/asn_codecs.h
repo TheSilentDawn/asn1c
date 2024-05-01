@@ -91,7 +91,7 @@ typedef struct asn_dec_rval_s {
 	asn_dec_rval_t tmp_error;				\
 	tmp_error.code = RC_FAIL;				\
 	tmp_error.consumed = 0;					\
-	ASN_DEBUG("Failed to decode element %s", td ? td->name : "");	\
+	printf("Failed to decode element %s", td ? td->name : "");	\
 	return tmp_error;					\
 } while(0)
 #define	ASN__DECODE_STARVED do {				\
