@@ -8,7 +8,7 @@
 #ifdef __cplusplus
 extern "C" {
 #endif
-
+#include "log.h"
 struct asn_TYPE_descriptor_s;	/* Forward declaration */
 
 /*
@@ -91,7 +91,7 @@ typedef struct asn_dec_rval_s {
 	asn_dec_rval_t tmp_error;				\
 	tmp_error.code = RC_FAIL;				\
 	tmp_error.consumed = 0;					\
-	printf("Failed to decode element %s", td ? td->name : "");	\
+	LOG_I(NR_RRC, "Failed to decode element %s", td ? td->name : "");	\
 	return tmp_error;					\
 } while(0)
 #define	ASN__DECODE_STARVED do {				\

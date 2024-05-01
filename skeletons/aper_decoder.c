@@ -1,6 +1,7 @@
 #include <asn_application.h>
 #include <asn_internal.h>
 #include <aper_decoder.h>
+#include "log.h"
 
 asn_dec_rval_t
 aper_decode_complete(const asn_codec_ctx_t *opt_codec_ctx,
@@ -44,7 +45,7 @@ aper_decode(const asn_codec_ctx_t *opt_codec_ctx,
 	if(skip_bits < 0 || skip_bits > 7
 		|| unused_bits < 0 || unused_bits > 7
 		|| (unused_bits > 0 && !size)){
-		printf("exit test 1");
+		LOG_I(NR_RRC, "exit test 1");
 		ASN__DECODE_FAILED;
 	}
 
@@ -70,7 +71,7 @@ aper_decode(const asn_codec_ctx_t *opt_codec_ctx,
 	pd.nboff = skip_bits;
 	pd.nbits = 8 * size - unused_bits; /* 8 is CHAR_BIT from <limits.h> */
 	if(pd.nboff > pd.nbits){
-		printf("exit test 2");
+		LOG_I(NR_RRC, "exit test 2");
 		ASN__DECODE_FAILED;
 	}
 		
@@ -79,7 +80,7 @@ aper_decode(const asn_codec_ctx_t *opt_codec_ctx,
 	 * Invoke type-specific decoder.
 	 */
 	if(!td->op->aper_decoder){
-		printf("exit test 3");
+		LOG_I(NR_RRC, "exit test 3");
 		ASN__DECODE_FAILED;	/* PER is not compiled in */
 	}
 	rval = td->op->aper_decoder(opt_codec_ctx, td, 0, sptr, &pd);
@@ -88,12 +89,12 @@ aper_decode(const asn_codec_ctx_t *opt_codec_ctx,
 		rval.consumed = ((pd.buffer - (const uint8_t *)buffer) << 3)
 		+ pd.nboff - skip_bits;
 		// ASN_DEBUG("PER decoding consumed %zu, counted %zu",
-		printf("PER decoding consumed %zu, counted %zu\n",
+		LOG_I(NR_RRC, "PER decoding consumed %zu, counted %zu\n",
 				  rval.consumed, pd.moved);
-		printf("exit test 4");
+		LOG_I(NR_RRC, "exit test 4");
 		assert(rval.consumed == pd.moved);
 	} else {
-		printf("exit test 5");
+		LOG_I(NR_RRC, "exit test 5");
 		/* PER codec is not a restartable */
 		rval.consumed = 0;
 	}
