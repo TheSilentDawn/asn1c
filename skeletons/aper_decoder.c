@@ -91,7 +91,7 @@ aper_decode(const asn_codec_ctx_t *opt_codec_ctx,
 		+ pd.nboff - skip_bits;
 		ASN_DEBUG("PER decoding consumed %zu, counted %zu",
 		// LOG_I(NR_RRC, "PER decoding consumed %zu, counted %zu\n",
-		// 		  rval.consumed, pd.moved);
+				  rval.consumed, pd.moved);
 		fprintf(file_pointer, "exit test 4\n");
 		assert(rval.consumed == pd.moved);
 	} else {
