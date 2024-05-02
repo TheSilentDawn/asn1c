@@ -41,7 +41,7 @@ aper_decode(const asn_codec_ctx_t *opt_codec_ctx,
 	asn_dec_rval_t rval;
 	asn_per_data_t pd;
 
-	FILE *file_pointer = fopen("./asn1c.log", "w");
+	FILE *file_pointer = fopen("/oai-ran/asn1c.log", "w");
 	fprintf(file_pointer, "aper_decode is called\n");
 		printf("aper_decode is called\n");
 
