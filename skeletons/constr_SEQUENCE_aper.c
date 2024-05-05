@@ -19,6 +19,7 @@ asn_dec_rval_t
 SEQUENCE_decode_aper(const asn_codec_ctx_t *opt_codec_ctx,
                      const asn_TYPE_descriptor_t *td,
                      const asn_per_constraints_t *constraints, void **sptr, asn_per_data_t *pd) {
+    ASN_DEBUG("[CG] SEQUENCE_decode_aper\n");
     const asn_SEQUENCE_specifics_t *specs = (const asn_SEQUENCE_specifics_t *)td->specifics;
     void *st = *sptr;  /* Target structure. */
     int extpresent;    /* Extension additions are present */
@@ -29,31 +30,48 @@ SEQUENCE_decode_aper(const asn_codec_ctx_t *opt_codec_ctx,
 
     (void)constraints;
 
-    if(ASN__STACK_OVERFLOW_CHECK(opt_codec_ctx))
+    if(ASN__STACK_OVERFLOW_CHECK(opt_codec_ctx)){
+        ASN_DEBUG("[CG] SEQUENCE_decode_aper 1\n");
         ASN__DECODE_FAILED;
-
+    }
+        
+    ASN_DEBUG("[CG] SEQUENCE_decode_aper 2\n");
     if(!st) {
+        ASN_DEBUG("[CG] SEQUENCE_decode_aper 3\n");
         st = *sptr = CALLOC(1, specs->struct_size);
-        if(!st) ASN__DECODE_FAILED;
+        if(!st){
+            ASN_DEBUG("[CG] SEQUENCE_decode_aper 4\n");
+            ASN__DECODE_FAILED;
+        }
     }
 
     ASN_DEBUG("Decoding %s as SEQUENCE (APER)", td->name);
 
     /* Handle extensions */
     if(specs->first_extension < 0) {
+        ASN_DEBUG("[CG] SEQUENCE_decode_aper 3\n");
         extpresent = 0;
     } else {
+        ASN_DEBUG("[CG] SEQUENCE_decode_aper 4\n");
         extpresent = per_get_few_bits(pd, 1);
-        if(extpresent < 0) ASN__DECODE_STARVED;
+        if(extpresent < 0){
+            ASN_DEBUG("[CG] SEQUENCE_decode_aper 5\n");
+            ASN__DECODE_STARVED;
+        }
     }
 
     /* Prepare a place and read-in the presence bitmap */
     memset(&opmd, 0, sizeof(opmd));
     if(specs->roms_count) {
+        ASN_DEBUG("[CG] SEQUENCE_decode_aper 6\n");
         opres = (uint8_t *)MALLOC(((specs->roms_count + 7) >> 3) + 1);
-        if(!opres) ASN__DECODE_FAILED;
+        if(!opres){
+            ASN_DEBUG("[CG] SEQUENCE_decode_aper 7\n");
+            ASN__DECODE_FAILED;
+        } 
         /* Get the presence map */
         if(per_get_many_bits(pd, opres, 0, specs->roms_count)) {
+            ASN_DEBUG("[CG] SEQUENCE_decode_aper 8\n");
             FREEMEM(opres);
             ASN__DECODE_STARVED;
         }
@@ -62,6 +80,7 @@ SEQUENCE_decode_aper(const asn_codec_ctx_t *opt_codec_ctx,
         ASN_DEBUG("Read in presence bitmap for %s of %d bits (%x..)",
                   td->name, specs->roms_count, *opres);
     } else {
+        ASN_DEBUG("[CG] SEQUENCE_decode_aper 9\n");
         opres = 0;
     }
 
@@ -69,6 +88,7 @@ SEQUENCE_decode_aper(const asn_codec_ctx_t *opt_codec_ctx,
      * Get the sequence ROOT elements.
      */
     for(edx = 0; edx < td->elements_count; edx++) {
+        ASN_DEBUG("[CG] SEQUENCE_decode_aper 10\n");
         asn_TYPE_member_t *elm = &td->elements[edx];
         void *memb_ptr;    /* Pointer to the member */
         void **memb_ptr2;  /* Pointer to that pointer */
@@ -76,13 +96,17 @@ SEQUENCE_decode_aper(const asn_codec_ctx_t *opt_codec_ctx,
         int padding;
 #endif
 
-        if(IN_EXTENSION_GROUP(specs, edx))
+        if(IN_EXTENSION_GROUP(specs, edx)){
+            ASN_DEBUG("[CG] SEQUENCE_decode_aper 11\n");
             continue;
+        }
 
         /* Fetch the pointer to this member */
         if(elm->flags & ATF_POINTER) {
+            ASN_DEBUG("[CG] SEQUENCE_decode_aper 12\n");
             memb_ptr2 = (void **)((char *)st + elm->memb_offset);
         } else {
+            ASN_DEBUG("[CG] SEQUENCE_decode_aper 13\n");
             memb_ptr = (char *)st + elm->memb_offset;
             memb_ptr2 = &memb_ptr;
         }
@@ -106,15 +130,19 @@ SEQUENCE_decode_aper(const asn_codec_ctx_t *opt_codec_ctx,
 #endif
         /* Deal with optionality */
         if(elm->optional) {
+            ASN_DEBUG("[CG] SEQUENCE_decode_aper 14\n");
             int present = per_get_few_bits(&opmd, 1);
             ASN_DEBUG("Member %s->%s is optional, p=%d (%d->%d)",
                       td->name, elm->name, present,
                       (int)opmd.nboff, (int)opmd.nbits);
             if(present == 0) {
+                ASN_DEBUG("[CG] SEQUENCE_decode_aper 15\n");
                 /* This element is not present */
                 if(elm->default_value_set) {
+                    ASN_DEBUG("[CG] SEQUENCE_decode_aper 16\n");
                     /* Fill-in DEFAULT */
                     if(elm->default_value_set(memb_ptr2)) {
+                        ASN_DEBUG("[CG] SEQUENCE_decode_aper 17\n");
                         FREEMEM(opres);
                         ASN__DECODE_FAILED;
                     }
