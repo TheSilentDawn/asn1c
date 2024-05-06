@@ -46,6 +46,7 @@ aper_encode_to_new_buffer(const asn_TYPE_descriptor_t *td,
 	memset(&key, 0, sizeof(key));
 
 	er = aper_encode(td, constraints, sptr, encode_dyn_cb, &key);
+	ASN_DEBUG("[aper_encode_to_new_buffer] er.encoded=%d", (int)er.encoded);
 	switch(er.encoded) {
 	case -1:
 		FREEMEM(key.buffer);
@@ -112,7 +113,10 @@ aper_encode(const asn_TYPE_descriptor_t *td,
 	po.op_key = app_key;
 	po.flushed_bytes = 0;
 
+	ASN_DEBUG("[aper_encode]po.nbits=%d", (int)po.nbits);
+
 	er = td->op->aper_encoder(td, constraints, sptr, &po);
+	ASN_DEBUG("[aper_encode]er.encoded=%d", (int)er.encoded);
 	if(er.encoded != -1) {
 		size_t bits_to_flush;
 

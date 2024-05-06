@@ -353,6 +353,7 @@ asn_enc_rval_t
 SEQUENCE_encode_aper(const asn_TYPE_descriptor_t *td,
                      const asn_per_constraints_t *constraints,
                      const void *sptr, asn_per_outp_t *po) {
+    ASN_DEBUG("SEQUENCE_encode_aper\n");
     const asn_SEQUENCE_specifics_t *specs
         = (const asn_SEQUENCE_specifics_t *)td->specifics;
     asn_enc_rval_t er = {0,0,0};
@@ -362,8 +363,10 @@ SEQUENCE_encode_aper(const asn_TYPE_descriptor_t *td,
 
     (void)constraints;
 
-    if(!sptr)
+    if(!sptr){
+        ASN_DEBUG("SEQUENCE_encode_aper 1\n");
         ASN__ENCODE_FAILED;
+    }
 
     er.encoded = 0;
 
@@ -374,11 +377,17 @@ SEQUENCE_encode_aper(const asn_TYPE_descriptor_t *td,
      * and whether to encode extensions
      */
     if(specs->first_extension < 0) {
+        ASN_DEBUG("SEQUENCE_encode_aper 2\n");
         n_extensions = 0; /* There are no extensions to encode */
     } else {
+        ASN_DEBUG("SEQUENCE_encode_aper 3\n");
         n_extensions = SEQUENCE_handle_extensions_aper(td, sptr, 0, 0);
-        if(n_extensions < 0) ASN__ENCODE_FAILED;
+        if(n_extensions < 0){
+            ASN_DEBUG("SEQUENCE_encode_aper 4\n");
+            ASN__ENCODE_FAILED;
+        } 
         if(per_put_few_bits(po, n_extensions ? 1 : 0, 1)) {
+            ASN_DEBUG("SEQUENCE_encode_aper 5\n");
             ASN__ENCODE_FAILED;
         }
     }
@@ -412,8 +421,10 @@ SEQUENCE_encode_aper(const asn_TYPE_descriptor_t *td,
                   elm->flags & ATF_POINTER ? "ptr" : "inline",
                   elm->default_value_cmp ? "def" : "wtv",
                   td->name, elm->name, present ? "present" : "absent");
-        if(per_put_few_bits(po, present, 1))
+        if(per_put_few_bits(po, present, 1)){
+            ASN_DEBUG("SEQUENCE_encode_aper 6\n");
             ASN__ENCODE_FAILED;
+            }
     }
 
     /*
@@ -443,6 +454,7 @@ SEQUENCE_encode_aper(const asn_TYPE_descriptor_t *td,
                 if(elm->optional)
                     continue;
                 /* Mandatory element is missing */
+                ASN_DEBUG("SEQUENCE_encode_aper 7\n");
                 ASN__ENCODE_FAILED;
             }
         } else {
@@ -458,28 +470,38 @@ SEQUENCE_encode_aper(const asn_TYPE_descriptor_t *td,
         er = elm->type->op->aper_encoder(elm->type,
                                          elm->encoding_constraints.per_constraints,
                                          *memb_ptr2, po);
+        ASN_DEBUG("SEQUENCE_encode_aper er.encoded=%d\n",(int)er.encoded);
         if(er.encoded == -1)
             return er;
     }
 
     /* No extensions to encode */
-    if(!n_extensions) ASN__ENCODED_OK(er);
+    if(!n_extensions){
+        ASN_DEBUG("SEQUENCE_encode_aper 8\n");
+        ASN__ENCODED_OK(er);
+    } 
 
     ASN_DEBUG("Length of %d bit-map", n_extensions);
     /* #18.8. Write down the presence bit-map length. */
-    if(aper_put_nslength(po, n_extensions))
+    if(aper_put_nslength(po, n_extensions)){
+        ASN_DEBUG("SEQUENCE_encode_aper 9\n");
         ASN__ENCODE_FAILED;
+    }
 
     ASN_DEBUG("Bit-map of %d elements", n_extensions);
     /* #18.7. Encoding the extensions presence bit-map. */
     /* TODO: act upon NOTE in #18.7 for canonical PER */
-    if(SEQUENCE_handle_extensions_aper(td, sptr, po, 0) != n_extensions)
+    if(SEQUENCE_handle_extensions_aper(td, sptr, po, 0) != n_extensions){
+        ASN_DEBUG("SEQUENCE_encode_aper 10\n");
         ASN__ENCODE_FAILED;
+    }
 
     ASN_DEBUG("Writing %d extensions", n_extensions);
     /* #18.9. Encode extensions as open type fields. */
-    if(SEQUENCE_handle_extensions_aper(td, sptr, 0, po) != n_extensions)
+    if(SEQUENCE_handle_extensions_aper(td, sptr, 0, po) != n_extensions){
+        ASN_DEBUG("SEQUENCE_encode_aper 11\n");
         ASN__ENCODE_FAILED;
+    }
 
     ASN__ENCODED_OK(er);
 }
