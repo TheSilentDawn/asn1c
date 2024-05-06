@@ -104,8 +104,8 @@ NativeInteger_free(const asn_TYPE_descriptor_t *td, void *ptr,
     if(!td || !ptr)
 		return;
 
-	ASN_DEBUG("Freeing %s as INTEGER (%d, %p, Native)",
-		td->name, method, ptr);
+	// ASN_DEBUG("Freeing %s as INTEGER (%d, %p, Native)",
+	// 	td->name, method, ptr);
 
     switch(method) {
     case ASFM_FREE_EVERYTHING:

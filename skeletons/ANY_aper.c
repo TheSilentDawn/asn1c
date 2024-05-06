@@ -121,7 +121,7 @@ ANY_decode_aper(const asn_codec_ctx_t *opt_codec_ctx,
         if(!st) RETURN(RC_FAIL);
     }
 
-    ASN_DEBUG("APER Decoding ANY type");
+    // ASN_DEBUG("APER Decoding ANY type");
 
     st->size = 0;
     do {

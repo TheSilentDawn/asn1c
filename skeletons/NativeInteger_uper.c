@@ -19,7 +19,7 @@ NativeInteger_decode_uper(const asn_codec_ctx_t *opt_codec_ctx,
     void *tmpintptr = &tmpint;
 
     (void)opt_codec_ctx;
-    ASN_DEBUG("Decoding NativeInteger %s (UPER)", td->name);
+    // ASN_DEBUG("Decoding NativeInteger %s (UPER)", td->name);
 
     if(!native) {
         native = (long *)(*sptr = CALLOC(1, sizeof(*native)));

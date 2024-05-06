@@ -26,8 +26,8 @@ ber_decode_primitive(const asn_codec_ctx_t *opt_codec_ctx,
         *sptr = (void *)st;
     }
 
-    ASN_DEBUG("Decoding %s as plain primitive (tm=%d)",
-              td->name, tag_mode);
+    // ASN_DEBUG("Decoding %s as plain primitive (tm=%d)",
+    //           td->name, tag_mode);
 
     /*
      * Check tags and extract value length.

@@ -165,7 +165,7 @@ CHOICE_free(const asn_TYPE_descriptor_t *td, void *ptr,
 
     specs = (const asn_CHOICE_specifics_t *)td->specifics;
 
-	ASN_DEBUG("Freeing %s as CHOICE", td->name);
+	// ASN_DEBUG("Freeing %s as CHOICE", td->name);
 
 	/*
 	 * Figure out which CHOICE element is encoded.

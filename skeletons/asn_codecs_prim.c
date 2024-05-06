@@ -13,7 +13,7 @@ ASN__PRIMITIVE_TYPE_free(const asn_TYPE_descriptor_t *td, void *sptr,
 	if(!td || !sptr)
 		return;
 
-	ASN_DEBUG("Freeing %s as a primitive type", td->name);
+	// ASN_DEBUG("Freeing %s as a primitive type", td->name);
 
 	if(st->buf)
 		FREEMEM(st->buf);

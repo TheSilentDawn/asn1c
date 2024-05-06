@@ -77,7 +77,7 @@ SEQUENCE_free(const asn_TYPE_descriptor_t *td, void *sptr,
 
     specs = (const asn_SEQUENCE_specifics_t *)td->specifics;
 
-	ASN_DEBUG("Freeing %s as SEQUENCE", td->name);
+	// ASN_DEBUG("Freeing %s as SEQUENCE", td->name);
 
 	for(edx = 0; edx < td->elements_count; edx++) {
 		asn_TYPE_member_t *elm = &td->elements[edx];

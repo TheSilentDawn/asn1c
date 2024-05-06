@@ -39,7 +39,7 @@ ANY_decode_uper(const asn_codec_ctx_t *opt_codec_ctx,
         if(!st) RETURN(RC_FAIL);
     }
 
-    ASN_DEBUG("UPER Decoding ANY type");
+    // ASN_DEBUG("UPER Decoding ANY type");
 
     st->size = 0;
     do {

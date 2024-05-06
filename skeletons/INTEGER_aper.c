@@ -119,7 +119,7 @@ INTEGER_decode_aper(const asn_codec_ctx_t *opt_codec_ctx,
             ASN__DECODE_FAILED;
         }
     } else {
-        ASN_DEBUG("Decoding unconstrained integer %s", td->name);
+        // ASN_DEBUG("Decoding unconstrained integer %s", td->name);
     }
 
     /* X.691, #12.2.3, #12.2.4 */

@@ -107,7 +107,7 @@ OCTET_STRING_free(const asn_TYPE_descriptor_t *td, void *sptr,
 	if(!td || !st)
 		return;
 
-	ASN_DEBUG("Freeing %s as OCTET STRING", td->name);
+	// ASN_DEBUG("Freeing %s as OCTET STRING", td->name);
 
 	if(st->buf) {
 		FREEMEM(st->buf);

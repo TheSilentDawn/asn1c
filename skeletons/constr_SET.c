@@ -111,7 +111,7 @@ SET_free(const asn_TYPE_descriptor_t *td, void *ptr,
 	if(!td || !ptr)
 		return;
 
-	ASN_DEBUG("Freeing %s as SET", td->name);
+	// ASN_DEBUG("Freeing %s as SET", td->name);
 
 	for(edx = 0; edx < td->elements_count; edx++) {
 		asn_TYPE_member_t *elm = &td->elements[edx];

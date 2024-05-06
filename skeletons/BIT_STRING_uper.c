@@ -55,9 +55,9 @@ BIT_STRING_decode_uper(const asn_codec_ctx_t *opt_codec_ctx,
         if(!st) RETURN(RC_FAIL);
     }
 
-    ASN_DEBUG("PER Decoding %s size %"ASN_PRIdMAX" .. %"ASN_PRIdMAX" bits %d",
-        csiz->flags & APC_EXTENSIBLE ? "extensible" : "non-extensible",
-        csiz->lower_bound, csiz->upper_bound, csiz->effective_bits);
+    // ASN_DEBUG("PER Decoding %s size %"ASN_PRIdMAX" .. %"ASN_PRIdMAX" bits %d",
+    //     csiz->flags & APC_EXTENSIBLE ? "extensible" : "non-extensible",
+    //     csiz->lower_bound, csiz->upper_bound, csiz->effective_bits);
 
     if(csiz->flags & APC_EXTENSIBLE) {
         int inext = per_get_few_bits(pd, 1);

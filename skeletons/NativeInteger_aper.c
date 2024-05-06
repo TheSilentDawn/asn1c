@@ -18,7 +18,7 @@ NativeInteger_decode_aper(const asn_codec_ctx_t *opt_codec_ctx,
     void *tmpintptr = &tmpint;
 
     (void)opt_codec_ctx;
-    ASN_DEBUG("Decoding NativeInteger %s (APER)", td->name);
+    // ASN_DEBUG("Decoding NativeInteger %s (APER)", td->name);
 
     if(!native) {
         native = (long *)(*sptr = CALLOC(1, sizeof(*native)));

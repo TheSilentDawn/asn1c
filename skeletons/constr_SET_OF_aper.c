@@ -154,7 +154,7 @@ SET_OF_decode_aper(const asn_codec_ctx_t *opt_codec_ctx,
 
         for(i = 0; i < nelems; i++) {
             void *ptr = 0;
-            ASN_DEBUG("SET OF %s decoding", elm->type->name);
+            // ASN_DEBUG("SET OF %s decoding", elm->type->name);
             rv = elm->type->op->aper_decoder(opt_codec_ctx, elm->type,
                                              elm->encoding_constraints.per_constraints, &ptr, pd);
             ASN_DEBUG("%s SET OF %s decoded %d, %p",

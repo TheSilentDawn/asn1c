@@ -60,8 +60,8 @@ SEQUENCE_decode_uper(const asn_codec_ctx_t *opt_codec_ctx,
         }
         opmd.buffer = opres;
         opmd.nbits = specs->roms_count;
-        ASN_DEBUG("Read in presence bitmap for %s of %d bits (%x..)",
-                  td->name, specs->roms_count, *opres);
+        // ASN_DEBUG("Read in presence bitmap for %s of %d bits (%x..)",
+        //           td->name, specs->roms_count, *opres);
     } else {
         opres = 0;
     }
@@ -155,8 +155,8 @@ SEQUENCE_decode_uper(const asn_codec_ctx_t *opt_codec_ctx,
         memset(&epmd, 0, sizeof(epmd));
         epmd.buffer = epres;
         epmd.nbits = bmlength;
-        ASN_DEBUG("Read in extensions bitmap for %s of %ld bits (%x..)",
-                  td->name, (long)bmlength, *epres);
+        // ASN_DEBUG("Read in extensions bitmap for %s of %ld bits (%x..)",
+        //           td->name, (long)bmlength, *epres);
 
         /* Go over extensions and read them in */
         for(edx = specs->first_extension; edx < td->elements_count; edx++) {
@@ -366,8 +366,8 @@ SEQUENCE_encode_uper(const asn_TYPE_descriptor_t *td,
     /*
      * Encode the sequence ROOT elements.
      */
-    ASN_DEBUG("first_extension = %d, elements = %d", specs->first_extension,
-              td->elements_count);
+    // ASN_DEBUG("first_extension = %d, elements = %d", specs->first_extension,
+    //           td->elements_count);
     for(edx = 0;
         edx < ((specs->first_extension < 0) ? td->elements_count
                                             : (size_t)specs->first_extension);
@@ -376,15 +376,15 @@ SEQUENCE_encode_uper(const asn_TYPE_descriptor_t *td,
         const void *memb_ptr;          /* Pointer to the member */
         const void *const *memb_ptr2;  /* Pointer to that pointer */
 
-        ASN_DEBUG("About to encode %s", elm->type->name);
+        // ASN_DEBUG("About to encode %s", elm->type->name);
 
         /* Fetch the pointer to this member */
         if(elm->flags & ATF_POINTER) {
             memb_ptr2 =
                 (const void *const *)((const char *)sptr + elm->memb_offset);
             if(!*memb_ptr2) {
-                ASN_DEBUG("Element %s %" ASN_PRI_SIZE " not present",
-                    elm->name, edx);
+                // ASN_DEBUG("Element %s %" ASN_PRI_SIZE " not present",
+                //     elm->name, edx);
                 if(elm->optional)
                     continue;
                 /* Mandatory element is missing */

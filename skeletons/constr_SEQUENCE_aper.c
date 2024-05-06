@@ -77,8 +77,8 @@ SEQUENCE_decode_aper(const asn_codec_ctx_t *opt_codec_ctx,
         }
         opmd.buffer = opres;
         opmd.nbits = specs->roms_count;
-        ASN_DEBUG("Read in presence bitmap for %s of %d bits (%x..)",
-                  td->name, specs->roms_count, *opres);
+        // ASN_DEBUG("Read in presence bitmap for %s of %d bits (%x..)",
+        //           td->name, specs->roms_count, *opres);
     } else {
         ASN_DEBUG("[CG] SEQUENCE_decode_aper 9\n");
         opres = 0;
@@ -203,8 +203,8 @@ SEQUENCE_decode_aper(const asn_codec_ctx_t *opt_codec_ctx,
         memset(&epmd, 0, sizeof(epmd));
         epmd.buffer = epres;
         epmd.nbits = bmlength;
-        ASN_DEBUG("Read in extensions bitmap for %s of %zd bits (%x..)",
-                  td->name, bmlength, *epres);
+        // ASN_DEBUG("Read in extensions bitmap for %s of %zd bits (%x..)",
+        //           td->name, bmlength, *epres);
 
         /* Deal with padding */
         if (aper_get_align(pd) < 0)

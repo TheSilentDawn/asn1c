@@ -32,8 +32,8 @@ NativeInteger_decode_ber(const asn_codec_ctx_t *opt_codec_ctx,
         }
     }
 
-    ASN_DEBUG("Decoding %s as INTEGER (tm=%d)",
-              td->name, tag_mode);
+    // ASN_DEBUG("Decoding %s as INTEGER (tm=%d)",
+    //           td->name, tag_mode);
 
     /*
      * Check tags.

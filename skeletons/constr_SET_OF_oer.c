@@ -166,7 +166,7 @@ SET_OF_decode_oer(const asn_codec_ctx_t *opt_codec_ctx,
 
         assert(td->elements_count == 1);
 
-        ASN_DEBUG("OER SET OF %s Decoding PHASE 1", td->name);
+        // ASN_DEBUG("OER SET OF %s Decoding PHASE 1", td->name);
 
         for(; ctx->left > 0; ctx->left--) {
             asn_dec_rval_t rv = elm->type->op->oer_decoder(

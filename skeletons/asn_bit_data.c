@@ -196,8 +196,8 @@ asn_put_few_bits(asn_bit_outp_t *po, uint32_t bits, int obits) {
 
 	if(obits <= 0 || obits >= 32) return obits ? -1 : 0;
 
-	ASN_DEBUG("[PER put %d bits %x to %p+%d bits]",
-			obits, (int)bits, (void *)po->buffer, (int)po->nboff);
+	// ASN_DEBUG("[PER put %d bits %x to %p+%d bits]",
+	// 		obits, (int)bits, (void *)po->buffer, (int)po->nboff);
 
 	/*
 	 * Normalize position indicator.
