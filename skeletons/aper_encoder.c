@@ -40,12 +40,14 @@ ssize_t
 aper_encode_to_new_buffer(const asn_TYPE_descriptor_t *td,
                           const asn_per_constraints_t *constraints,
                           const void *sptr, void **buffer_r) {
+	ASN_DEBUG("[CG] aper_encode_to_new_buffer\n");
     asn_enc_rval_t er = {0,0,0};
 	enc_dyn_arg key;
 
 	memset(&key, 0, sizeof(key));
-
+	ASN_DEBUG("[CG] aper_encode_to_new_buffer 1\n");
 	er = aper_encode(td, constraints, sptr, encode_dyn_cb, &key);
+	ASN_DEBUG("[CG] aper_encode_to_new_buffer 2\n");
 	ASN_DEBUG("[aper_encode_to_new_buffer] er.encoded=%d", (int)er.encoded);
 	switch(er.encoded) {
 	case -1:
@@ -103,8 +105,11 @@ aper_encode(const asn_TYPE_descriptor_t *td,
 	/*
 	 * Invoke type-specific encoder.
 	 */
-	if(!td || !td->op->aper_encoder)
+	ASN_DEBUG("[CG]aper_encode\n");
+	if(!td || !td->op->aper_encoder){
+		ASN_DEBUG("[CG]aper_encode 1\n");
 		ASN__ENCODE_FAILED;	 /* PER is not compiled in */
+	}
 
 	po.buffer = po.tmpspace;
 	po.nboff = 0;
@@ -113,9 +118,11 @@ aper_encode(const asn_TYPE_descriptor_t *td,
 	po.op_key = app_key;
 	po.flushed_bytes = 0;
 
+	ASN_DEBUG("[CG]aper_encode 2\n");
 	ASN_DEBUG("[aper_encode]po.nbits=%d", (int)po.nbits);
 
 	er = td->op->aper_encoder(td, constraints, sptr, &po);
+	ASN_DEBUG("[CG]aper_encode 3\n");
 	ASN_DEBUG("[aper_encode]er.encoded=%d", (int)er.encoded);
 	if(er.encoded != -1) {
 		size_t bits_to_flush;

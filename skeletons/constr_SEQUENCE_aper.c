@@ -353,7 +353,7 @@ asn_enc_rval_t
 SEQUENCE_encode_aper(const asn_TYPE_descriptor_t *td,
                      const asn_per_constraints_t *constraints,
                      const void *sptr, asn_per_outp_t *po) {
-    ASN_DEBUG("SEQUENCE_encode_aper\n");
+    ASN_DEBUG("[CG]SEQUENCE_encode_aper\n");
     const asn_SEQUENCE_specifics_t *specs
         = (const asn_SEQUENCE_specifics_t *)td->specifics;
     asn_enc_rval_t er = {0,0,0};
@@ -367,7 +367,7 @@ SEQUENCE_encode_aper(const asn_TYPE_descriptor_t *td,
         ASN_DEBUG("SEQUENCE_encode_aper 1\n");
         ASN__ENCODE_FAILED;
     }
-
+    ASN_DEBUG("[CG]SEQUENCE_encode_aper 1.5\n");
     er.encoded = 0;
 
     ASN_DEBUG("Encoding %s as SEQUENCE (APER)", td->name);
@@ -391,9 +391,10 @@ SEQUENCE_encode_aper(const asn_TYPE_descriptor_t *td,
             ASN__ENCODE_FAILED;
         }
     }
-
+    ASN_DEBUG("[CG]SEQUENCE_encode_aper 6\n");
     /* Encode a presence bitmap */
     for(i = 0; i < specs->roms_count; i++) {
+        ASN_DEBUG("[CG]SEQUENCE_encode_aper 7\n");
         asn_TYPE_member_t *elm;
         const void *memb_ptr;           /* Pointer to the member */
         const void * const *memb_ptr2;  /* Pointer to that pointer */
@@ -404,9 +405,11 @@ SEQUENCE_encode_aper(const asn_TYPE_descriptor_t *td,
 
         /* Fetch the pointer to this member */
         if(elm->flags & ATF_POINTER) {
+            ASN_DEBUG("[CG]SEQUENCE_encode_aper 8\n");
             memb_ptr2 = (const void * const *)((const char *)sptr + elm->memb_offset);
             present = (*memb_ptr2 != 0);
         } else {
+            ASN_DEBUG("[CG]SEQUENCE_encode_aper 9\n");
             memb_ptr = (const void *)((const char *)sptr + elm->memb_offset);
             memb_ptr2 = &memb_ptr;
             present = 1;
@@ -414,94 +417,109 @@ SEQUENCE_encode_aper(const asn_TYPE_descriptor_t *td,
 
         /* Eliminate default values */
         if(present && elm->default_value_cmp
-                && elm->default_value_cmp(*memb_ptr2) == 0)
+                && elm->default_value_cmp(*memb_ptr2) == 0){
             present = 0;
-
+            ASN_DEBUG("[CG]SEQUENCE_encode_aper 10\n");
+        }
+        ASN_DEBUG("[CG]SEQUENCE_encode_aper 11\n");
         ASN_DEBUG("Element %s %s %s->%s is %s",
                   elm->flags & ATF_POINTER ? "ptr" : "inline",
                   elm->default_value_cmp ? "def" : "wtv",
                   td->name, elm->name, present ? "present" : "absent");
         if(per_put_few_bits(po, present, 1)){
-            ASN_DEBUG("SEQUENCE_encode_aper 6\n");
+            ASN_DEBUG("SEQUENCE_encode_aper 12\n");
             ASN__ENCODE_FAILED;
             }
+        ASN_DEBUG("[CG]SEQUENCE_encode_aper 13\n");
     }
 
     /*
      * Encode the sequence ROOT elements.
      */
+    ASN_DEBUG("[CG]SEQUENCE_encode_aper 14\n");
     ASN_DEBUG("first_extension = %d, elements = %d", specs->first_extension,
               td->elements_count);
     for(edx = 0;
         edx < ((specs->first_extension < 0) ? td->elements_count
                                             : (size_t)specs->first_extension);
         edx++) {
+        ASN_DEBUG("[CG]SEQUENCE_encode_aper 15\n");
         asn_TYPE_member_t *elm = &td->elements[edx];
         const void *memb_ptr;           /* Pointer to the member */
         const void * const *memb_ptr2;  /* Pointer to that pointer */
 
-        if(IN_EXTENSION_GROUP(specs, edx))
+        if(IN_EXTENSION_GROUP(specs, edx)){
+            ASN_DEBUG("[CG]SEQUENCE_encode_aper 16\n");
             continue;
-
+        }
+        ASN_DEBUG("[CG]SEQUENCE_encode_aper 17\n");
         ASN_DEBUG("About to encode %s", elm->type->name);
 
         /* Fetch the pointer to this member */
         if(elm->flags & ATF_POINTER) {
+            ASN_DEBUG("[CG]SEQUENCE_encode_aper 18\n");
             memb_ptr2 = (const void * const *)((const char *)sptr + elm->memb_offset);
             if(!*memb_ptr2) {
+                ASN_DEBUG("[CG]SEQUENCE_encode_aper 19\n");
                 ASN_DEBUG("Element %s %zu not present",
                           elm->name, edx);
-                if(elm->optional)
+                if(elm->optional){
+                    ASN_DEBUG("[CG]SEQUENCE_encode_aper 20\n");
                     continue;
+                }
                 /* Mandatory element is missing */
-                ASN_DEBUG("SEQUENCE_encode_aper 7\n");
+                ASN_DEBUG("SEQUENCE_encode_aper 21\n");
                 ASN__ENCODE_FAILED;
             }
         } else {
+            ASN_DEBUG("[CG]SEQUENCE_encode_aper 22\n");
             memb_ptr = (const void *)((const char *)sptr + elm->memb_offset);
             memb_ptr2 = &memb_ptr;
         }
 
         /* Eliminate default values */
-        if(elm->default_value_cmp && elm->default_value_cmp(*memb_ptr2) == 0)
+        if(elm->default_value_cmp && elm->default_value_cmp(*memb_ptr2) == 0){
+            ASN_DEBUG("[CG]SEQUENCE_encode_aper 23\n");
             continue;
-
+        }
+        ASN_DEBUG("[CG]SEQUENCE_encode_aper 24\n");
         ASN_DEBUG("Encoding %s->%s", td->name, elm->name);
         er = elm->type->op->aper_encoder(elm->type,
                                          elm->encoding_constraints.per_constraints,
                                          *memb_ptr2, po);
+        ASN_DEBUG("[CG]SEQUENCE_encode_aper 25\n");
         ASN_DEBUG("SEQUENCE_encode_aper er.encoded=%d\n",(int)er.encoded);
         if(er.encoded == -1)
             return er;
     }
-
+    ASN_DEBUG("[CG]SEQUENCE_encode_aper 26\n");
     /* No extensions to encode */
     if(!n_extensions){
-        ASN_DEBUG("SEQUENCE_encode_aper 8\n");
+        ASN_DEBUG("SEQUENCE_encode_aper 27\n");
         ASN__ENCODED_OK(er);
     } 
-
+    ASN_DEBUG("[CG]SEQUENCE_encode_aper 28\n");
     ASN_DEBUG("Length of %d bit-map", n_extensions);
     /* #18.8. Write down the presence bit-map length. */
     if(aper_put_nslength(po, n_extensions)){
-        ASN_DEBUG("SEQUENCE_encode_aper 9\n");
+        ASN_DEBUG("SEQUENCE_encode_aper 29\n");
         ASN__ENCODE_FAILED;
     }
-
+    ASN_DEBUG("[CG]SEQUENCE_encode_aper 30\n");
     ASN_DEBUG("Bit-map of %d elements", n_extensions);
     /* #18.7. Encoding the extensions presence bit-map. */
     /* TODO: act upon NOTE in #18.7 for canonical PER */
     if(SEQUENCE_handle_extensions_aper(td, sptr, po, 0) != n_extensions){
-        ASN_DEBUG("SEQUENCE_encode_aper 10\n");
+        ASN_DEBUG("SEQUENCE_encode_aper 31\n");
         ASN__ENCODE_FAILED;
     }
-
+    ASN_DEBUG("[CG]SEQUENCE_encode_aper 32\n");
     ASN_DEBUG("Writing %d extensions", n_extensions);
     /* #18.9. Encode extensions as open type fields. */
     if(SEQUENCE_handle_extensions_aper(td, sptr, 0, po) != n_extensions){
-        ASN_DEBUG("SEQUENCE_encode_aper 11\n");
+        ASN_DEBUG("SEQUENCE_encode_aper 33\n");
         ASN__ENCODE_FAILED;
     }
-
+    ASN_DEBUG("[CG]SEQUENCE_encode_aper 34\n");
     ASN__ENCODED_OK(er);
 }
