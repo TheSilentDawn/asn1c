@@ -70,6 +70,7 @@ asn_get_few_bits(asn_bit_data_t *pd, int nbits) {
 		return -1;
 
 	nleft = pd->nbits - pd->nboff;
+	ASN_DEBUG("[1]nleft(%u) = pd->nbits(%u) - pd->nboff(%u)\n",nleft, pd->nbits, pd->nboff);
 	if(nbits > nleft) {
 		int32_t tailv, vhead;
 		if(!pd->refill || nbits > 31) return -1;
@@ -91,15 +92,18 @@ asn_get_few_bits(asn_bit_data_t *pd, int nbits) {
 	/*
 	 * Normalize position indicator.
 	 */
+	ASN_DEBUG("[2]pd->nboff=%u, pd->nbits=%u\n", pd->nboff, pd->nbits);
 	if(pd->nboff >= 8) {
 		pd->buffer += (pd->nboff >> 3);
 		pd->nbits  -= (pd->nboff & ~0x07);
 		pd->nboff  &= 0x07;
 	}
+	ASN_DEBUG("[3]pd->nboff=%u, pd->nbits=%u\n", pd->nboff, pd->nbits);
 	pd->moved += nbits;
 	pd->nboff += nbits;
 	off = pd->nboff;
 	buf = pd->buffer;
+	ASN_DEBUG("[4]pd->moved=%u,pd->nboff=%u\n", pd->moved,pd->nboff);
 
 	/*
 	 * Extract specified number of bits.

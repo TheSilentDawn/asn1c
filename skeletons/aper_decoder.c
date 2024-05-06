@@ -75,7 +75,8 @@ aper_decode(const asn_codec_ctx_t *opt_codec_ctx,
 		ASN_DEBUG("exit test 2\n");
 		ASN__DECODE_FAILED;
 	}
-		
+
+	ASN_DEBUG("pd.nboff=%u, pd.nbits=%u\n", pd.nboff, pd.nbits);
 
 	/*
 	 * Invoke type-specific decoder.

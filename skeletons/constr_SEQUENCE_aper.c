@@ -37,10 +37,10 @@ SEQUENCE_decode_aper(const asn_codec_ctx_t *opt_codec_ctx,
         
     ASN_DEBUG("[CG] SEQUENCE_decode_aper 2\n");
     if(!st) {
-        ASN_DEBUG("[CG] SEQUENCE_decode_aper 3\n");
+        ASN_DEBUG("[CG] SEQUENCE_decode_aper 2.1\n");
         st = *sptr = CALLOC(1, specs->struct_size);
         if(!st){
-            ASN_DEBUG("[CG] SEQUENCE_decode_aper 4\n");
+            ASN_DEBUG("[CG] SEQUENCE_decode_aper 2.2\n");
             ASN__DECODE_FAILED;
         }
     }
